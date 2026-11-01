@@ -6,6 +6,7 @@
 // Usage: node sim/simulate.mjs [outDir] [raters] [sessionsPerRater] [seed]
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import {
   GENES, GENE_INDEX, D, LINEAGES, newState, nextPair, recordPick, rngFor, normal, sigmoid,
   picksCSV, creaturesCSV,
@@ -62,7 +63,7 @@ export function runSimulation({ raters = 3, sessionsPerRater = 10, seed = 202611
   return { state, people };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const out = process.argv[2] || "data/sim";
   const raters = Number(process.argv[3] || 3);
   const sessions = Number(process.argv[4] || 10);

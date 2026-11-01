@@ -2,6 +2,10 @@
 
 A browser game for a preference study of machine creatures. Players choose between two creatures under one question, and their choices breed new generations and train a Bradley-Terry preference model.
 
+[Play the preview](https://mochi-mahean-kaldun1.vercel.app)
+
+The current Vercel deployment was uploaded directly; automatic deployment from GitHub is not connected yet.
+
 ## Play locally
 
 Requires Node.js 18 or later. No JavaScript dependencies are required.

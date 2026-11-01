@@ -1,0 +1,62 @@
+{
+  "node": "v22.23.4",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "note": "Single-threaded; mean milliseconds per call after warm-up.",
+  "rows": [
+    {
+      "picks": 600,
+      "picks_per_lineage": 320,
+      "creatures": 152,
+      "nextPair_ms": 0.0158,
+      "itemBT_ms": 2.484,
+      "advanceGeneration_ms": 4.523,
+      "featureBT_ms": 10.593,
+      "replay_ms": 26.44,
+      "recordPick_ms": 0.0851
+    },
+    {
+      "picks": 1200,
+      "picks_per_lineage": 600,
+      "creatures": 272,
+      "nextPair_ms": 0.023,
+      "itemBT_ms": 4.374,
+      "advanceGeneration_ms": 8.679,
+      "featureBT_ms": 3.173,
+      "replay_ms": 62.45,
+      "recordPick_ms": 0.056
+    },
+    {
+      "picks": 2400,
+      "picks_per_lineage": 1200,
+      "creatures": 512,
+      "nextPair_ms": 0.0121,
+      "itemBT_ms": 6.951,
+      "advanceGeneration_ms": 14.78,
+      "featureBT_ms": 6.044,
+      "replay_ms": 280.53,
+      "recordPick_ms": 0.0409
+    },
+    {
+      "picks": 4800,
+      "picks_per_lineage": 2400,
+      "creatures": 992,
+      "nextPair_ms": 0.0131,
+      "itemBT_ms": 12.864,
+      "advanceGeneration_ms": 35.807,
+      "featureBT_ms": 12.045,
+      "replay_ms": 952.76,
+      "recordPick_ms": 0.0968
+    },
+    {
+      "picks": 9600,
+      "picks_per_lineage": 4800,
+      "creatures": 1952,
+      "nextPair_ms": 0.0203,
+      "itemBT_ms": 24.4,
+      "advanceGeneration_ms": 62.308,
+      "featureBT_ms": 27.291,
+      "replay_ms": 3840.67,
+      "recordPick_ms": 0.1458
+    }
+  ]
+}

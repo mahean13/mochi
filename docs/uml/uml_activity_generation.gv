@@ -1,0 +1,112 @@
+// ---------------------------------------------------------------------------
+// uml_activity_generation.gv - UML activity diagram of
+// advanceGeneration(state, lineageId) in web/engine.js 1.1.0: the MAP-Elites
+// step that recordPick() runs once a generation has 40 picks.
+//
+// Every action and decision follows the code in order:
+//   refit creature-level Bradley-Terry (fitItemBT) on all picks of the
+//   lineage; rebuild the archive keeping the best creature per descriptor
+//   cell; keep up to eliteCount = 8 elites by score; breed offspring by
+//   uniform crossover and Gaussian mutation until activeSize = 16; record
+//   the history entry; advance the generation.
+// mutationRate = 0.3 and mutationSigma = 0.1 (CONFIG).
+// All random draws use rng = rngFor(seed, lineageId, "gen", gen + 1).
+//
+// Notation (UML 2 activity diagram)
+//   filled dot = initial node, ringed dot = activity final node,
+//   rounded box = action, small diamond = decision or merge with [guards],
+//   dashed rounded box «iterative» = expansion region run once per element,
+//   circle A = connector joining the two columns.
+//
+// Drawn with fixed node positions (points, y up) and straight edges;
+// bends are invisible waypoint nodes (w...). Guards are placed text (g...).
+//     ./render.sh uml_activity_generation   (intended print width 5.5 in)
+// ---------------------------------------------------------------------------
+digraph uml_activity_generation {
+  graph [fontname="Liberation Serif", layout=neato, splines=line, pad=0.05, outputorder=nodesfirst];
+  node  [fontname="Liberation Serif", fontsize=12, shape=box, style=rounded,
+         margin="0.08,0.04", width=0, height=0];
+  edge  [arrowhead=vee, arrowsize=0.7];
+
+  // ------------------------------------------------------------- regions
+  R1 [pos="118,-305!", shape=box, style="rounded,dashed", fixedsize=true,
+      width=3.0, height=2.35, label=""];
+  R2 [pos="418,-415!", shape=box, style="rounded,dashed", fixedsize=true,
+      width=3.05, height=3.63, label=""];
+
+  // ------------------------------------------------------------- column 1
+  S   [pos="118,-14!", shape=circle, style=filled, fillcolor=black, fixedsize=true, width=0.17, label=""];
+  a1  [pos="118,-58!",  label="picks = lineagePicks(state, lineageId)\nas {winner, loser}"];
+  a2  [pos="118,-108!", label="seen = every creature in those picks"];
+  a3  [pos="118,-156!", label="scores = fitItemBT(seen, picks)\nL.scores = scores"];
+  a4  [pos="118,-203!", label="archive = {}"];
+  d2  [pos="118,-262!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  a6  [pos="118,-330!", label="archive[c.cell] = id"];
+  m2  [pos="118,-380!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  a7  [pos="118,-435!", label="L.archive = archive"];
+  a8  [pos="118,-492!", label="elites = the creatures in archive\nkeep = up to eliteCount (8)\nelites, highest score first"];
+  d3  [pos="118,-552!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  b1  [pos="58,-600!",  label="parentsPool = elites"];
+  b2  [pos="182,-600!", label="parentsPool = seen"];
+  m3  [pos="118,-645!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  CA  [pos="118,-688!", shape=circle, style="", fixedsize=true, width=0.26, label="A"];
+
+  // ------------------------------------------------------------- column 2
+  CB  [pos="418,-14!",  shape=circle, style="", fixedsize=true, width=0.26, label="A"];
+  m4  [pos="418,-55!",  shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  d4  [pos="418,-98!",  shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  c1  [pos="418,-143!", label="draw pa, pb from parentsPool"];
+  d5  [pos="418,-185!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  c2  [pos="418,-228!", label="pb = the next creature in the pool"];
+  m5  [pos="418,-268!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  c3  [pos="418,-345!", label="x = pa.genes[k] or pb.genes[k],\neach with probability 0.5"];
+  d8  [pos="418,-395!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  c4  [pos="418,-445!", label="x = x + mutationSigma × N(0, 1)"];
+  m6  [pos="418,-488!", shape=diamond, style="", fixedsize=true, width=0.22, height=0.3, label=""];
+  c5  [pos="418,-525!", label="child[k] = clamp(x, 0, 1)"];
+  c6  [pos="418,-587!", label="offspring.push(makeCreature(state,\nlineageId, gen + 1, child, [pa, pb]))"];
+  c7  [pos="418,-645!", label="L.history.push({gen, picks, archiveCells,\nbest, bestScore, meanGenes})"];
+  c8  [pos="418,-698!", label="L.gen = gen + 1\nL.active = keep + offspring"];
+  E   [pos="418,-738!", shape=doublecircle, style=filled, fillcolor=black, fixedsize=true, width=0.13, label=""];
+
+  // ------------------------------------------------------------- waypoints
+  node [shape=point, width=0.01, height=0.01, style="", label=""];
+  w1 [pos="210,-262!"];  w2 [pos="210,-380!"];      // d2 [else] bypass
+  w3 [pos="560,-98!"];   w4 [pos="560,-645!"];      // d4 [else] to history
+  w5 [pos="530,-185!"];  w6 [pos="530,-268!"];      // d5 [else] bypass
+  w7 [pos="516,-395!"];  w8 [pos="516,-488!"];      // d8 [else] bypass
+  w9 [pos="282,-587!"];  w10 [pos="282,-55!"];      // loop back to m4
+
+  // ------------------------------------------------------------- flows
+  S -> a1; a1 -> a2; a2 -> a3; a3 -> a4; a4 -> d2;
+  d2 -> a6; a6 -> m2;
+  d2 -> w1 [arrowhead=none]; w1 -> w2 [arrowhead=none]; w2 -> m2;
+  m2 -> a7; a7 -> a8; a8 -> d3;
+  d3 -> b1; d3 -> b2; b1 -> m3; b2 -> m3; m3 -> CA;
+
+  CB -> m4; m4 -> d4; d4 -> c1; c1 -> d5;
+  d5 -> c2; c2 -> m5;
+  d5 -> w5 [arrowhead=none]; w5 -> w6 [arrowhead=none]; w6 -> m5;
+  m5 -> c3; c3 -> d8; d8 -> c4; c4 -> m6;
+  d8 -> w7 [arrowhead=none]; w7 -> w8 [arrowhead=none]; w8 -> m6;
+  m6 -> c5; c5 -> c6;
+  c6 -> w9 [arrowhead=none]; w9 -> w10 [arrowhead=none]; w10 -> m4;
+  d4 -> w3 [arrowhead=none]; w3 -> w4 [arrowhead=none]; w4 -> c7;
+  c7 -> c8; c8 -> E;
+
+  // ------------------------------------------------------------- guards
+  node [shape=plaintext, fontsize=12, margin=0, width=0, height=0, style=""];
+  // Region keywords, placed at the top left of each expansion region.
+  r1 [pos="62,-237!", label="«iterative»\lfor each id in seen\l"];
+  r2 [pos="358,-307!", label="«iterative»\lfor each gene k\l"];
+  g1 [pos="58,-290!",  label="[cell c.cell empty,\lor scores[id] > its\lelite's score]\l"];
+  g2 [pos="172,-252!", label="[else]"];
+  g3 [pos="68,-565!",  label="[≥ 2 elites]"];
+  g4 [pos="168,-565!", label="[else]"];
+  g5 [pos="492,-118!", label="[|keep| + |offspring|\l< activeSize (16)]\l"];
+  g6 [pos="520,-88!",  label="[else]"];
+  g7 [pos="358,-205!", label="[pb = pa and\lpool size > 1]\l"];
+  g8 [pos="490,-175!", label="[else]"];
+  g9 [pos="360,-418!", label="[rng() <\lmutationRate]\l"];
+  g10 [pos="490,-385!", label="[else]"];
+}

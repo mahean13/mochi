@@ -1,0 +1,168 @@
+// ---------------------------------------------------------------------------
+// uml_datamodel.gv - UML class diagram of the Mochi study data model
+// (web/engine.js version 1.1.0, functions newState, makeCreature, recordPick,
+// advanceGeneration; constants GENES, LINEAGES, CONFIG).
+//
+// The engine has no JavaScript classes: the study is one plain JSON object
+// built by newState() and changed by recordPick() / advanceGeneration().
+// Each kind of JSON record is drawn as a class with its exact field names.
+// Records refer to each other by id strings; the associations show which
+// record an id points to.
+//
+// Notation
+//   filled diamond (arrowtail=diamond)   composition, at the whole
+//   hollow diamond (arrowtail=odiamond)  aggregation (shared, by id)
+//   dashed line with open arrow          dependency
+//   taillabel / headlabel                multiplicities at each end
+//
+// Class boxes are written compactly (label="UML ...") and expanded into
+// UML compartments by classbox.py. Node positions are fixed (points, y up)
+// and the file is drawn with  neato -n2 ; render.sh does both steps:
+//     ./render.sh uml_datamodel        (intended print width 6.5 in)
+// ---------------------------------------------------------------------------
+digraph uml_datamodel {
+  graph [fontname="Liberation Serif", layout=neato, splines=line, pad=0.15];
+  node  [shape=plain, fontname="Liberation Serif", fontsize=13];
+  edge  [fontname="Liberation Serif", fontsize=12, arrowsize=0.8,
+         labeldistance=1.7, labelangle=35, arrowhead=none];
+
+  // ------------------------------------------------------------- classes
+  StudyState [pos="346,-73!", label="UML
+    StudyState
+    --
+    + engine: String = \"1.1.0\"
+    + seed: Int = 20261101
+    + created: String [0..1]
+    + config: Config
+    + creatures: Map<String, Creature>
+    + counts: Map<String, Int>
+    + lineages: Map<String, Lineage>
+    + picks: Pick [0..*] {ordered by n}
+    + sessions: Session [0..*]
+  "];
+
+  Config [pos="88,-73!", label="UML
+    Config
+    --
+    + activeSize: Int = 16
+    + eliteCount: Int = 8
+    + picksPerGeneration: Int = 40
+    + roundsPerSession: Int = 40
+    + mutationRate: Float = 0.3
+    + mutationSigma: Float = 0.1
+  "];
+
+  Session [pos="580,-73!", label="UML
+    Session
+    --
+    + id: String
+    + participant: String
+    + lineage: String
+    + startedAt: String [0..1]
+    + simulated: Boolean
+  "];
+
+  Lineage [pos="106,-540!", label="UML
+    Lineage
+    --
+    + id: String {\"home\" | \"trust\"}
+    + gen: Int
+    + active: String [16]
+    + archive: Map<String, String>
+    + scores: Map<String, Float>
+    + history: LineageHistoryEntry [0..*]
+  "];
+
+  Pick [pos="575,-302!", label="UML
+    Pick
+    --
+    + n: Int {1, 2, 3, ...}
+    + lineage: String
+    + gen: Int
+    + session: String
+    + participant: String
+    + round: Int
+    + left: String
+    + right: String
+    + chosen: String
+    + side: String {\"left\" | \"right\"}
+    + ms: Int [0..1]
+    + at: String [0..1]
+  "];
+
+  LineageSpec [pos="95,-710!", label="UML
+    «constant LINEAGES»
+    LineageSpec
+    --
+    + id: String
+    + question: String
+    + short: String
+  "];
+
+  Creature [pos="420,-540!", label="UML
+    Creature
+    --
+    + id: String {e.g. \"H3-07\"}
+    + lineage: String
+    + gen: Int
+    + genes: Float [20] {each in [0, 1]}
+    + parents: String [0..2]
+    + cell: String {\"i,j\"; i, j in 0..4}
+  "];
+
+  LineageHistoryEntry [pos="262,-725!", label="UML
+    LineageHistoryEntry
+    --
+    + gen: Int
+    + picks: Int
+    + archiveCells: Int
+    + best: String [0..1]
+    + bestScore: Float [0..1]
+    + meanGenes: Float [20]
+  "];
+
+  GeneSpec [pos="420,-732!", label="UML
+    «constant GENES»
+    GeneSpec
+    --
+    + key: String
+    + label: String
+    + group: String
+    + min: Float
+    + max: Float
+    + desc: String
+  "];
+
+  Note [pos="585,-717!", shape=note, fontsize=12, margin="0.08,0.05",
+        label="References are id strings.\lPick.left, right and chosen,\lLineage.active, archive values\land Creature.parents hold\lCreature.id; Pick.session holds\lSession.id; each lineage field\l(Creature, Pick, Session) holds\lLineage.id.\l"];
+
+  // ------------------------------------------------------------- relations
+  // Ports fix where each line meets a box: compass points (:n, :se, ...)
+  // or member rows (:a3:e is the right end of the third attribute row).
+  // The role names config and sessions are the StudyState fields of the
+  // same name and are left off the two short horizontal lines.
+  // StudyState is the whole; its parts are drawn with filled diamonds.
+  Config -> StudyState        [dir=both, arrowhead=diamond, arrowtail=none, headlabel="1", taillabel="1", labelangle=-40];
+  StudyState -> Session       [dir=both, arrowtail=diamond, taillabel="1", headlabel="0..*", labelangle=-40];
+  StudyState:sw -> Lineage:n  [dir=both, arrowtail=diamond, taillabel="1", headlabel="2", label="lineages"];
+  StudyState:s -> Creature:nw [dir=both, arrowtail=diamond, taillabel="1", headlabel="1..*", label="creatures", labelangle=-35];
+  StudyState:se -> Pick:nw    [dir=both, arrowtail=diamond, taillabel="1", headlabel="0..*", label="picks           ", labelangle=-40];
+  Session:s -> Pick:n          [taillabel="1", headlabel="0..*", label="session", labelangle=-35];
+
+  // Lineage to Creature: drawn row to row, from the Lineage field that
+  // holds the ids to the Creature field it relates to.
+  Lineage:a1:e -> Creature:a2:w [taillabel="1", headlabel="1..*", label="breeds\n "];
+  Lineage:a3:e -> Creature:a4:w [dir=both, arrowtail=odiamond, taillabel="0..1", headlabel="16", label="active\n "];
+  Lineage:a4:e -> Creature:a6:w [dir=both, arrowtail=odiamond, taillabel="0..1", headlabel="0..25", label=" \narchive", labelangle=35];
+  // Labels are centred on their line by neato; padding with spaces or a
+  // blank second line moves the text clear of the line.
+  Lineage:s -> LineageSpec:n    [style=dashed, arrowhead=vee, headlabel="1", label="id is a          \nkey of             "];
+  Lineage:se -> LineageHistoryEntry:n [dir=both, arrowtail=diamond, taillabel="1", headlabel="0..*", label="                 history", labelangle=-35];
+
+  Pick:sw -> Creature:n       [arrowhead=vee, taillabel="0..*", headlabel="1", label="chosen", labelangle=-35];
+  Pick:s -> Creature:ne       [arrowhead=vee, taillabel="0..*", headlabel="2", label="                left, right"];
+  // Self-association: the stacked label puts the tail multiplicity (0..*)
+  // beside the top of the loop and the head multiplicity (0..2) by the arrow.
+  Creature:a1:e -> Creature:a5:e [arrowhead=vee, label="0..*\l\lparents\l\l0..2\l"];
+  Creature:s -> GeneSpec:n    [style=dashed, arrowhead=vee, headlabel="20", label=" genes[k] scaled\l to [min, max]\l", labelangle=-35];
+}

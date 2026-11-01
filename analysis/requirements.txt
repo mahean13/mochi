@@ -1,0 +1,8 @@
+# Analysis package (python3 -m mochi_analysis)
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+# Tests only
+pytest>=8
+scikit-learn>=1.4
+# Optional: Node.js (>= 18) to regenerate simulations and for the engine.js cross-check test.

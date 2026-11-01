@@ -1,0 +1,56 @@
+' ---------------------------------------------------------------------------
+' uml_sequence_round.puml - UML sequence diagram of one round of Mochi:
+' pair, render, pick, record (and breed after 40 picks), save.
+' The session start is in uml_sequence_session.puml.
+'
+' Sources: web/index.src.html (showRound, choose, queueWrite,
+' leaseLineage, saveLocal) and web/engine.js 1.1.0
+' (nextPair, currentGenerationPicks, recordPick,
+' picksThisGeneration, advanceGeneration).
+' StudyDatabase stands for the storage functions of the page script; the
+' calls it makes on the artifact capability "db" are named in the labels.
+'
+' Render:  ./render.sh uml_sequence_round      (intended print width 6.5 in)
+' ---------------------------------------------------------------------------
+@startuml uml_sequence_round
+!include mochi_style.iuml
+hide footbox
+skinparam ParticipantPadding 2
+skinparam BoxPadding 2
+' Labels are broken into lines by hand (\n) to keep the lifelines close.
+skinparam SequenceGroupHeaderFontStyle plain
+skinparam SequenceParticipantFontSize 12
+skinparam SequenceActorFontSize 12
+
+actor Volunteer
+participant "Game UI" as UI
+participant "LocalBackup" as LB
+participant "Renderer" as R
+participant "PairScheduler" as PS
+participant "StudyEngine" as SE
+participant "StudyDatabase" as DB
+
+UI -> PS : nextPair(state,\nlineage)
+note over PS, SE : scans this generation's picks\nwith currentGenerationPicks()
+PS --> UI : {left, right}
+UI -> R : renderSVG(\nleft.genes)
+UI -> R : renderSVG(\nright.genes)
+UI --> Volunteer : question and\ntwo creatures
+Volunteer -> UI : click or arrow\nkey (side)
+activate UI
+UI -> SE : recordPick(state, {lineage, left,\nright, chosen, session, participant,\nround, ms, at})
+activate SE
+SE -> SE : state.picks\n.push(pick)
+alt picksThisGeneration\n≥ 40
+  SE -> SE : advanceGeneration(\nstate, lineage)
+end
+SE --> UI : {pick, advanced}
+deactivate SE
+UI -> LB : saveLocal()
+UI ->> DB : queueWrite("picks/p000123", pick):\ndb sets picks/p000123\n(one retry if unavailable)
+opt pick.n mod 8 = 0
+  UI ->> DB : leaseLineage(lineage, session.id):\ndb acquires locks/<lineage>\n(renews the two-minute lease)
+end
+UI -> UI : after 260 ms:\nshowRound()
+deactivate UI
+@enduml

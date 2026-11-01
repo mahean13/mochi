@@ -1,0 +1,77 @@
+// uml_overview.gv: overview class diagram of Mochi (Figure 2 of the midterm).
+// Packages and their main classes only; every field is in uml_datamodel.
+// Render: ./render.sh uml_overview
+digraph Mochi {
+  graph [rankdir=TB, fontname="Liberation Serif", fontsize=13, nodesep=0.5, ranksep=0.6, splines=spline, compound=true, newrank=true];
+  node  [shape=plaintext, fontname="Liberation Serif", fontsize=12];
+  edge  [fontname="Liberation Serif", fontsize=11, arrowhead=vee, style=dashed, color="#000000", labeldistance=1.5];
+
+  subgraph cluster_ui {
+    label=<<b>Game page</b>>; labeljust=l; style=solid; penwidth=1;
+    GameUI [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«script»</i><br/><b>GameUI</b></td></tr><hr/>
+      <tr><td align="left">+ showRound(): Void<br align="left"/>+ choose(side): Void<br align="left"/></td></tr></table>>];
+    Research [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«script»</i><br/><b>ResearcherView</b></td></tr><hr/>
+      <tr><td align="left">+ showResearch(): Void<br align="left"/>+ exportData(kind): Void<br align="left"/></td></tr></table>>];
+  }
+
+  subgraph cluster_engine {
+    label=<<b>Engine</b>>; labeljust=l; style=solid; penwidth=1;
+    Pair [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«module»</i><br/><b>PairScheduler</b></td></tr><hr/>
+      <tr><td align="left">+ nextPair(state, lineage): Pair<br align="left"/></td></tr></table>>];
+    Render [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«module»</i><br/><b>Renderer</b></td></tr><hr/>
+      <tr><td align="left">+ renderSVG(genes): String<br align="left"/></td></tr></table>>];
+    Engine [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«module»</i><br/><b>StudyEngine</b></td></tr><hr/>
+      <tr><td align="left">+ recordPick(state, pick)<br align="left"/>+ advanceGeneration(state, lineage)<br align="left"/>+ replay(seed, picks): StudyState<br align="left"/></td></tr></table>>];
+    Models [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«module»</i><br/><b>PreferenceModels</b></td></tr><hr/>
+      <tr><td align="left">+ fitItemBT(items, picks)<br align="left"/>+ fitFeatureBT(rows)<br align="left"/></td></tr></table>>];
+    State [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><b>StudyState</b></td></tr><hr/>
+      <tr><td align="left">+ lineages: Lineage [2]<br align="left"/>+ creatures: Creature [1..*]<br align="left"/>+ picks: Pick [0..*]<br align="left"/></td></tr></table>>];
+  }
+
+  subgraph cluster_store {
+    label=<<b>Storage</b>>; labeljust=r; style=solid; penwidth=1;
+    Db [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«script»</i><br/><b>StudyDatabase</b></td></tr><hr/>
+      <tr><td align="left">+ syncFromDatabase()<br align="left"/>+ queueWrite(path, data)<br align="left"/>+ leaseLineage(lineage)<br align="left"/></td></tr></table>>];
+    Local [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«script»</i><br/><b>LocalBackup</b></td></tr><hr/>
+      <tr><td align="left">+ saveLocal(): Void<br align="left"/></td></tr></table>>];
+  }
+
+  subgraph cluster_analysis {
+    label=<<b>Analysis</b>>; labeljust=l; style=solid; penwidth=1;
+    Py [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«Python package»</i><br/><b>mochi_analysis</b></td></tr><hr/>
+      <tr><td align="left">model fit, cross-validation,<br align="left"/>bootstrap, sensitivity analysis<br align="left"/></td></tr></table>>];
+  }
+
+  Export [label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td><i>«files»</i><br/><b>Exported data</b></td></tr><hr/>
+      <tr><td align="left">picks.csv, creatures.csv,<br align="left"/>state.json<br align="left"/></td></tr></table>>];
+
+  { rank=same; GameUI; Research; Py; }
+  { rank=same; Pair; Render; Export; }
+  { rank=same; Engine; Models; Db; }
+  { rank=same; State; Local; }
+
+  // Ordering inside the engine (invisible edges only place the boxes).
+  Pair -> Engine [style=invis];
+  Render -> Models [style=invis];
+  Engine -> State [label=" «create, update»"];
+  Engine -> Models [label="«use»", constraint=false];
+
+  // Dependencies between packages, kept to the ones a reader needs.
+  GameUI -> Pair [lhead=cluster_engine, label=" «use»"];
+  GameUI -> Db [label=" «use»"];
+  Research -> Export [label=" «write»"];
+  Db -> Engine [xlabel="replay"];
+  Db -> Local [label=" «use»"];
+  Py -> Export [label=" «read»"];
+}

@@ -1,0 +1,108 @@
+' ---------------------------------------------------------------------------
+' mochi_style.iuml - shared look for every Mochi UML figure.
+' Classic monochrome UML in the style of draw.io / LaTeX figures:
+' white boxes, thin black borders, a serif font, no shadows, no icons.
+' Included by each diagram with:  !include mochi_style.iuml
+' ---------------------------------------------------------------------------
+
+' --- global ---------------------------------------------------------------
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam defaultFontColor black
+skinparam ArrowColor black
+skinparam ArrowThickness 1
+skinparam ArrowFontName "Liberation Serif"
+skinparam ArrowFontSize 12
+skinparam roundCorner 0
+skinparam padding 2
+skinparam Nodesep 40
+skinparam Ranksep 50
+
+' --- classes --------------------------------------------------------------
+' No coloured "C" circles; visibility shown as text (- + #), not icons.
+hide circle
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam ClassBackgroundColor white
+skinparam ClassBorderColor black
+skinparam ClassBorderThickness 1
+skinparam ClassFontName "Liberation Serif"
+skinparam ClassFontStyle bold
+skinparam ClassFontSize 14
+skinparam ClassAttributeFontName "Liberation Serif"
+skinparam ClassAttributeFontSize 13
+skinparam ClassStereotypeFontName "Liberation Serif"
+skinparam ClassStereotypeFontStyle italic
+skinparam ClassStereotypeFontSize 12
+skinparam stereotypeCBackgroundColor white
+
+' --- packages -------------------------------------------------------------
+skinparam PackageBackgroundColor white
+skinparam PackageBorderColor black
+skinparam PackageBorderThickness 1
+skinparam PackageFontName "Liberation Serif"
+skinparam PackageFontStyle bold
+skinparam PackageFontSize 15
+skinparam PackageStyle folder
+
+' --- notes ----------------------------------------------------------------
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam NoteBorderThickness 1
+skinparam NoteFontName "Liberation Serif"
+skinparam NoteFontSize 12
+
+' --- sequence diagrams ----------------------------------------------------
+skinparam SequenceParticipantBackgroundColor white
+skinparam SequenceParticipantBorderColor black
+skinparam SequenceParticipantFontName "Liberation Serif"
+skinparam SequenceParticipantFontStyle bold
+skinparam SequenceParticipantFontSize 13
+skinparam SequenceActorBorderColor black
+skinparam SequenceActorBackgroundColor white
+skinparam SequenceActorFontName "Liberation Serif"
+skinparam SequenceActorFontStyle bold
+skinparam SequenceActorFontSize 13
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceLifeLineBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceGroupBorderThickness 1
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupHeaderFontName "Liberation Serif"
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam SequenceGroupFontName "Liberation Serif"
+skinparam SequenceGroupFontStyle plain
+skinparam SequenceGroupFontSize 12
+skinparam SequenceMessageAlign left
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceDividerFontName "Liberation Serif"
+skinparam SequenceBoxBorderColor black
+skinparam SequenceBoxBackgroundColor white
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam SequenceReferenceFontName "Liberation Serif"
+
+' --- activity diagrams ----------------------------------------------------
+skinparam ActivityBackgroundColor white
+skinparam ActivityBorderColor black
+skinparam ActivityBorderThickness 1
+skinparam ActivityFontName "Liberation Serif"
+skinparam ActivityFontSize 13
+skinparam ActivityDiamondBackgroundColor white
+skinparam ActivityDiamondBorderColor black
+skinparam ActivityDiamondFontName "Liberation Serif"
+skinparam ActivityDiamondFontSize 12
+skinparam ActivityStartColor black
+skinparam ActivityEndColor black
+skinparam ActivityBarColor black
+skinparam PartitionBorderColor black
+skinparam PartitionBackgroundColor white
+skinparam PartitionFontName "Liberation Serif"
+skinparam PartitionFontStyle bold
+skinparam SwimlaneBorderColor black
+skinparam SwimlaneTitleFontName "Liberation Serif"
+skinparam SwimlaneTitleFontStyle bold

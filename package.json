@@ -1,0 +1,13 @@
+{
+  "name": "mochi",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mochi: a preference model of cute machine form. Web game, MAP-Elites breeding and Bradley-Terry analysis.",
+  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/engine.test.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

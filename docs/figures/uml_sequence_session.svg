@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="939px" preserveAspectRatio="none" style="width:713px;height:939px;" version="1.1" viewBox="0 0 713 939" width="713px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="786.0122" style="stroke: #000000; stroke-width: 1.0;" width="10" x="185.5" y="131.3965"/><rect fill="#FFFFFF" height="291.937" style="stroke: #000000; stroke-width: 1.0;" width="10" x="371.5" y="190.793"/><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.0;" width="10" x="371.5" y="631.4717"/><rect fill="#FFFFFF" height="128.144" style="stroke: #000000; stroke-width: 1.0;" width="10" x="504.5" y="222.5918"/><rect fill="#FFFFFF" height="82.3452" style="stroke: #000000; stroke-width: 1.0;" width="192" x="454.5" y="237.5918"/><rect fill="#FFFFFF" height="128.7417" style="stroke: #000000; stroke-width: 1.0;" width="290.5" x="146.5" y="542.5288"/><rect fill="#FFFFFF" height="225.1382" style="stroke: #000000; stroke-width: 1.0;" width="688" x="13" y="685.2705"/><rect fill="#FFFFFF" height="141.9941" style="stroke: none; stroke-width: 1.0;" width="688" x="13" y="768.4146"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="54" x2="54" y1="83.7988" y2="927.4087"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="190.5" x2="190.5" y1="83.7988" y2="927.4087"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="376" x2="376" y1="83.7988" y2="927.4087"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="509.5" x2="509.5" y1="83.7988" y2="927.4087"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="646" x2="646" y1="83.7988" y2="927.4087"/><text fill="#000000" font-family="Liberation Serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="25" y="79.2031">Volunteer</text><ellipse cx="54.5" cy="13" fill="#FFFFFF" rx="8" ry="8" style="stroke: #000000; stroke-width: 2.0;"/><path d="M54.5,21 L54.5,48 M41.5,29 L67.5,29 M54.5,48 L41.5,63 M54.5,48 L67.5,63 " fill="none" style="stroke: #000000; stroke-width: 2.0;"/><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.5;" width="64" x="158.5" y="51"/><text fill="#000000" font-family="Liberation Serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="46" x="167.5" y="71.2031">Game UI</text><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.5;" width="97" x="328" y="51"/><text fill="#000000" font-family="Liberation Serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="79" x="337" y="71.2031">StudyDatabase</text><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.5;" width="86" x="466.5" y="51"/><text fill="#000000" font-family="Liberation Serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="68" x="475.5" y="71.2031">StudyEngine</text><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.5;" width="85" x="604" y="51"/><text fill="#000000" font-family="Liberation Serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="613" y="71.2031">LocalBackup</text><rect fill="#FFFFFF" height="786.0122" style="stroke: #000000; stroke-width: 1.0;" width="10" x="185.5" y="131.3965"/><rect fill="#FFFFFF" height="291.937" style="stroke: #000000; stroke-width: 1.0;" width="10" x="371.5" y="190.793"/><rect fill="#FFFFFF" height="31.7988" style="stroke: #000000; stroke-width: 1.0;" width="10" x="371.5" y="631.4717"/><rect fill="#FFFFFF" height="128.144" style="stroke: #000000; stroke-width: 1.0;" width="10" x="504.5" y="222.5918"/><polygon fill="#000000" points="173.5,127.3965,183.5,131.3965,173.5,135.3965,177.5,131.3965" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="54.5" x2="179.5" y1="131.3965" y2="131.3965"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="102" x="63.5" y="111.002">Start (code, consent):</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="98" x="63.5" y="124.8008">beginSession(pcode)</text><polygon fill="#000000" points="359.5,186.793,369.5,190.793,359.5,194.793,363.5,190.793" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="365.5" y1="190.793" y2="190.793"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="104" x="204.5" y="156.5996">syncFromDatabase():</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="114" x="204.5" y="170.3984">db fetchAll picks/ by n,</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="108" x="204.5" y="184.1973">sessions/ by startedAt</text><polygon fill="#000000" points="492.5,218.5918,502.5,222.5918,492.5,226.5918,496.5,222.5918" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="381.5" x2="498.5" y1="222.5918" y2="222.5918"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="100" x="390.5" y="215.9961">replay(SEED, picks)</text><path d="M454.5,237.5918 L527.5,237.5918 L527.5,247.5918 L517.5,257.5918 L454.5,257.5918 L454.5,237.5918 " fill="#FFFFFF" style="stroke: #000000; stroke-width: 1.0;"/><rect fill="none" height="82.3452" style="stroke: #000000; stroke-width: 1.0;" width="192" x="454.5" y="237.5918"/><text fill="#000000" font-family="Liberation Serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24" x="471.5" y="252.7285">loop</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="85" x="544.5" y="252.7949">[each stored pick,</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="63" x="544.5" y="266.5938">in order of n]</text><line style="stroke: #000000; stroke-width: 1.0;" x1="514.5" x2="556.5" y1="298.937" y2="298.937"/><line style="stroke: #000000; stroke-width: 1.0;" x1="556.5" x2="556.5" y1="298.937" y2="311.937"/><line style="stroke: #000000; stroke-width: 1.0;" x1="515.5" x2="556.5" y1="311.937" y2="311.937"/><polygon fill="#000000" points="525.5,307.937,515.5,311.937,525.5,315.937,521.5,311.937" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="109" x="523.5" y="292.3413">recordPick(state, pick)</text><polygon fill="#000000" points="392.5,346.7358,382.5,350.7358,392.5,354.7358,388.5,350.7358" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="386.5" x2="508.5" y1="350.7358" y2="350.7358"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="92" x="400.5" y="344.1401">remote: StudyState</text><line style="stroke: #000000; stroke-width: 1.0;" x1="381.5" x2="423.5" y1="423.9312" y2="423.9312"/><line style="stroke: #000000; stroke-width: 1.0;" x1="423.5" x2="423.5" y1="423.9312" y2="436.9312"/><line style="stroke: #000000; stroke-width: 1.0;" x1="382.5" x2="423.5" y1="436.9312" y2="436.9312"/><polygon fill="#000000" points="392.5,432.9312,382.5,436.9312,392.5,440.9312,388.5,436.9312" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67" x="390.5" y="375.939">if the local log</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="93" x="390.5" y="389.7378">extends the remote:</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="97" x="390.5" y="403.5366">queueWrite() extras;</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="90" x="390.5" y="417.3354">else state = remote</text><polygon fill="#000000" points="634.5,464.73,644.5,468.73,634.5,472.73,638.5,468.73" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="381.5" x2="640.5" y1="468.73" y2="468.73"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="55" x="390.5" y="462.1343">saveLocal()</text><polygon fill="#000000" points="206.5,478.73,196.5,482.73,206.5,486.73,202.5,482.73" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="200.5" x2="375.5" y1="482.73" y2="482.73"/><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="237.5" y1="514.5288" y2="514.5288"/><line style="stroke: #000000; stroke-width: 1.0;" x1="237.5" x2="237.5" y1="514.5288" y2="527.5288"/><line style="stroke: #000000; stroke-width: 1.0;" x1="196.5" x2="237.5" y1="527.5288" y2="527.5288"/><polygon fill="#000000" points="206.5,523.5288,196.5,527.5288,206.5,531.5288,202.5,527.5288" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="144" x="204.5" y="507.9331">chooseLineage(): fewest picks</text><path d="M146.5,542.5288 L219.5,542.5288 L219.5,552.5288 L209.5,562.5288 L146.5,562.5288 L146.5,542.5288 " fill="#FFFFFF" style="stroke: #000000; stroke-width: 1.0;"/><rect fill="none" height="128.7417" style="stroke: #000000; stroke-width: 1.0;" width="290.5" x="146.5" y="542.5288"/><text fill="#000000" font-family="Liberation Serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24" x="163.5" y="557.6655">loop</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="117" x="236.5" y="557.7319">[lineages, preferred first,</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="89" x="236.5" y="571.5308">until one is leased]</text><polygon fill="#000000" points="359.5,627.4717,369.5,631.4717,359.5,635.4717,363.5,631.4717" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="365.5" y1="631.4717" y2="631.4717"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="153" x="204.5" y="597.2783">leaseLineage(lineage, sessionId):</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="131" x="204.5" y="611.0771">db acquires locks/&lt;lineage&gt;</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="118" x="204.5" y="624.876">{holder, ttlMs: 120000}</text><polygon fill="#000000" points="206.5,659.2705,196.5,663.2705,206.5,667.2705,202.5,663.2705" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="200.5" x2="375.5" y1="663.2705" y2="663.2705"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="85" x="214.5" y="656.6748">acquired: Boolean</text><path d="M13,685.2705 L75,685.2705 L75,695.2705 L65,705.2705 L13,705.2705 L13,685.2705 " fill="#FFFFFF" style="stroke: #000000; stroke-width: 1.0;"/><rect fill="none" height="225.1382" style="stroke: #000000; stroke-width: 1.0;" width="688" x="13" y="685.2705"/><text fill="#000000" font-family="Liberation Serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="13" x="30" y="700.4072">alt</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="87" x="92" y="700.4736">[no lineage leased]</text><polygon fill="#000000" points="65.5,756.4146,55.5,760.4146,65.5,764.4146,61.5,760.4146" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="59.5" x2="184.5" y1="760.4146" y2="760.4146"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="94" x="73.5" y="726.2212">"Another session is</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="103" x="73.5" y="740.02">running on a different</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="38" x="73.5" y="753.8188">device."</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;" x1="13" x2="701" y1="769.4146" y2="769.4146"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91" x="20" y="782.6177">[a lineage is leased]</text><polygon fill="#000000" points="634.5,808.0122,644.5,812.0122,634.5,816.0122,638.5,812.0122" style="stroke: #000000; stroke-width: 1.0;"/><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="640.5" y1="812.0122" y2="812.0122"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="55" x="204.5" y="805.4165">saveLocal()</text><line style="stroke: #000000; stroke-width: 1.0;" x1="374.5" x2="364.5" y1="857.6099" y2="853.6099"/><line style="stroke: #000000; stroke-width: 1.0;" x1="374.5" x2="364.5" y1="857.6099" y2="861.6099"/><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="375.5" y1="857.6099" y2="857.6099"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="59" x="204.5" y="837.2153">queueWrite(</text><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="116" x="204.5" y="851.0142">"sessions/&lt;id&gt;", record)</text><line style="stroke: #000000; stroke-width: 1.0;" x1="195.5" x2="237.5" y1="889.4087" y2="889.4087"/><line style="stroke: #000000; stroke-width: 1.0;" x1="237.5" x2="237.5" y1="889.4087" y2="902.4087"/><line style="stroke: #000000; stroke-width: 1.0;" x1="196.5" x2="237.5" y1="902.4087" y2="902.4087"/><polygon fill="#000000" points="206.5,898.4087,196.5,902.4087,206.5,906.4087,202.5,902.4087" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="Liberation Serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="66" x="204.5" y="882.813">showRound()</text><!--
+@startuml uml_sequence_session
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam defaultFontColor black
+skinparam ArrowColor black
+skinparam ArrowThickness 1
+skinparam ArrowFontName "Liberation Serif"
+skinparam ArrowFontSize 12
+skinparam roundCorner 0
+skinparam padding 2
+skinparam Nodesep 40
+skinparam Ranksep 50
+
+hide circle
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam ClassBackgroundColor white
+skinparam ClassBorderColor black
+skinparam ClassBorderThickness 1
+skinparam ClassFontName "Liberation Serif"
+skinparam ClassFontStyle bold
+skinparam ClassFontSize 14
+skinparam ClassAttributeFontName "Liberation Serif"
+skinparam ClassAttributeFontSize 13
+skinparam ClassStereotypeFontName "Liberation Serif"
+skinparam ClassStereotypeFontStyle italic
+skinparam ClassStereotypeFontSize 12
+skinparam stereotypeCBackgroundColor white
+
+skinparam PackageBackgroundColor white
+skinparam PackageBorderColor black
+skinparam PackageBorderThickness 1
+skinparam PackageFontName "Liberation Serif"
+skinparam PackageFontStyle bold
+skinparam PackageFontSize 15
+skinparam PackageStyle folder
+
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam NoteBorderThickness 1
+skinparam NoteFontName "Liberation Serif"
+skinparam NoteFontSize 12
+
+skinparam SequenceParticipantBackgroundColor white
+skinparam SequenceParticipantBorderColor black
+skinparam SequenceParticipantFontName "Liberation Serif"
+skinparam SequenceParticipantFontStyle bold
+skinparam SequenceParticipantFontSize 13
+skinparam SequenceActorBorderColor black
+skinparam SequenceActorBackgroundColor white
+skinparam SequenceActorFontName "Liberation Serif"
+skinparam SequenceActorFontStyle bold
+skinparam SequenceActorFontSize 13
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceLifeLineBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceGroupBorderThickness 1
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupHeaderFontName "Liberation Serif"
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam SequenceGroupFontName "Liberation Serif"
+skinparam SequenceGroupFontStyle plain
+skinparam SequenceGroupFontSize 12
+skinparam SequenceMessageAlign left
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceDividerFontName "Liberation Serif"
+skinparam SequenceBoxBorderColor black
+skinparam SequenceBoxBackgroundColor white
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam SequenceReferenceFontName "Liberation Serif"
+
+skinparam ActivityBackgroundColor white
+skinparam ActivityBorderColor black
+skinparam ActivityBorderThickness 1
+skinparam ActivityFontName "Liberation Serif"
+skinparam ActivityFontSize 13
+skinparam ActivityDiamondBackgroundColor white
+skinparam ActivityDiamondBorderColor black
+skinparam ActivityDiamondFontName "Liberation Serif"
+skinparam ActivityDiamondFontSize 12
+skinparam ActivityStartColor black
+skinparam ActivityEndColor black
+skinparam ActivityBarColor black
+skinparam PartitionBorderColor black
+skinparam PartitionBackgroundColor white
+skinparam PartitionFontName "Liberation Serif"
+skinparam PartitionFontStyle bold
+skinparam SwimlaneBorderColor black
+skinparam SwimlaneTitleFontName "Liberation Serif"
+skinparam SwimlaneTitleFontStyle bold
+hide footbox
+skinparam ParticipantPadding 2
+skinparam BoxPadding 2
+skinparam SequenceGroupHeaderFontStyle plain
+skinparam SequenceParticipantFontSize 12
+skinparam SequenceActorFontSize 12
+
+actor Volunteer
+participant "Game UI" as UI
+participant "StudyDatabase" as DB
+participant "StudyEngine" as SE
+participant "LocalBackup" as LB
+
+Volunteer -> UI : Start (code, consent):\nbeginSession(pcode)
+activate UI
+UI -> DB : syncFromDatabase():\ndb fetchAll picks/ by n,\nsessions/ by startedAt
+activate DB
+DB -> SE : replay(SEED, picks)
+activate SE
+loop each stored pick,\nin order of n
+  SE -> SE : recordPick(state, pick)
+end
+SE - -> DB : remote: StudyState
+deactivate SE
+DB -> DB : if the local log\nextends the remote:\nqueueWrite() extras;\nelse state = remote
+DB -> LB : saveLocal()
+DB - -> UI
+deactivate DB
+UI -> UI : chooseLineage(): fewest picks
+loop lineages, preferred first,\nuntil one is leased
+  UI -> DB : leaseLineage(lineage, sessionId):\ndb acquires locks/<lineage>\n{holder, ttlMs: 120000}
+  activate DB
+  DB - -> UI : acquired: Boolean
+  deactivate DB
+end
+alt no lineage leased
+  UI - -> Volunteer : "Another session is\nrunning on a different\ndevice."
+else a lineage is leased
+  UI -> LB : saveLocal()
+  UI ->> DB : queueWrite(\n"sessions/<id>", record)
+  UI -> UI : showRound()
+end
+deactivate UI
+
+@enduml
+
+PlantUML version 1.2019.06(Fri May 24 10:10:25 PDT 2019)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 21.0.12.1+1-1-24.04.4-Ubuntu
+Operating System: Linux
+OS Version: 6.18.44-fc-v185
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

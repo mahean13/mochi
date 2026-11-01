@@ -1,0 +1,61 @@
+' ---------------------------------------------------------------------------
+' uml_sequence_session.puml - UML sequence diagram of the start of a Mochi
+' session: consent, sync with replay, lineage choice and lease.
+' The rounds that follow are in uml_sequence_round.puml.
+'
+' Sources: web/index.src.html (beginSession, syncFromDatabase, leaseLineage,
+' showRound, choose, queueWrite, saveLocal) and web/engine.js 1.1.0
+' (replay, recordPick).
+' StudyDatabase stands for the storage functions of the page script; the
+' calls it makes on the artifact capability "db" are named in the labels.
+'
+' Render:  ./render.sh uml_sequence_session     (intended print width 6.5 in)
+' ---------------------------------------------------------------------------
+@startuml uml_sequence_session
+!include mochi_style.iuml
+hide footbox
+skinparam ParticipantPadding 2
+skinparam BoxPadding 2
+' Labels are broken into lines by hand (\n) to keep the lifelines close.
+skinparam SequenceGroupHeaderFontStyle plain
+skinparam SequenceParticipantFontSize 12
+skinparam SequenceActorFontSize 12
+
+actor Volunteer
+participant "Game UI" as UI
+participant "StudyDatabase" as DB
+participant "StudyEngine" as SE
+participant "LocalBackup" as LB
+
+Volunteer -> UI : Start (code, consent):\nbeginSession(pcode)
+activate UI
+UI -> DB : syncFromDatabase():\ndb fetchAll picks/ by n,\nsessions/ by startedAt
+activate DB
+DB -> SE : replay(SEED, picks)
+activate SE
+loop each stored pick,\nin order of n
+  SE -> SE : recordPick(state, pick)
+end
+SE --> DB : remote: StudyState
+deactivate SE
+DB -> DB : if the local log\nextends the remote:\nqueueWrite() extras;\nelse state = remote
+DB -> LB : saveLocal()
+DB --> UI
+deactivate DB
+UI -> UI : chooseLineage(): fewest picks
+loop lineages, preferred first,\nuntil one is leased
+  UI -> DB : leaseLineage(lineage, sessionId):\ndb acquires locks/<lineage>\n{holder, ttlMs: 120000}
+  activate DB
+  DB --> UI : acquired: Boolean
+  deactivate DB
+end
+alt no lineage leased
+  UI --> Volunteer : "Another session is\nrunning on a different\ndevice."
+else a lineage is leased
+  UI -> LB : saveLocal()
+  UI ->> DB : queueWrite(\n"sessions/<id>", record)
+  UI -> UI : showRound()
+end
+deactivate UI
+
+@enduml

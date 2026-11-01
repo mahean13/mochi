@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mochi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF6F0;
+  --bg2: #F3EADF;
+  --card: #FFFDFA;
+  --line: #E4D8C8;
+  --ink: #2A231E;
+  --muted: #6E6157;
+  --accent: #B8501F;
+  --accent-soft: #FBEDE4;
+  --sage: #5E7363;
+  --sage-soft: #EAEFEA;
+  --focus: #1F5FB8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1F1A16; --bg2: #2A231E; --card: #2E2722; --line: #463B33; --ink: #F3EADF;
+    --muted: #BFAE9F; --accent: #E07A45; --accent-soft: #3A2A20; --sage: #9BB3A0; --sage-soft: #26302A; --focus: #8FB4F0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1F1A16; --bg2: #2A231E; --card: #2E2722; --line: #463B33; --ink: #F3EADF;
+  --muted: #BFAE9F; --accent: #E07A45; --accent-soft: #3A2A20; --sage: #9BB3A0; --sage-soft: #26302A; --focus: #8FB4F0;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 400; margin: 0; line-height: 1.15; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+.brand { font-family: Fraunces, Georgia, serif; font-size: 26px; letter-spacing: 0.2px; }
+.brand small { font-family: Inter, sans-serif; font-size: 13px; color: var(--muted); margin-left: 8px; }
+.link { background: none; border: none; color: var(--muted); font-size: 14px; text-decoration: underline; padding: 6px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
+.lede { font-family: Fraunces, Georgia, serif; font-size: 28px; line-height: 1.25; margin: 0 0 14px; }
+.muted { color: var(--muted); }
+.btn { border: none; border-radius: 999px; padding: 12px 26px; font-weight: 600; font-size: 16px; }
+.btn.primary { background: var(--accent); color: #FFFDFA; }
+.btn.primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.ghost { background: var(--bg2); color: var(--ink); }
+.consent { display: grid; gap: 22px; }
+.consent ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.field { display: grid; gap: 6px; max-width: 320px; }
+.field input { font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.check { display: flex; gap: 10px; align-items: flex-start; }
+.check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+.pills { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pill { font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; }
+.pill.round { color: var(--accent); background: var(--accent-soft); }
+.pill.gen { color: var(--sage); background: var(--sage-soft); }
+.question { text-align: center; font-size: clamp(24px, 4vw, 38px); margin: 18px 0 26px; }
+.duel { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(8px, 3vw, 36px); align-items: center; }
+.or { font-family: Fraunces, Georgia, serif; color: var(--muted); font-size: 22px; }
+.choice {
+  background: var(--bg); border: 2px solid var(--line); border-radius: 24px; padding: clamp(10px, 2vw, 22px);
+  display: grid; justify-items: center; gap: 12px; color: var(--ink); transition: transform 0.12s, border-color 0.12s, background 0.12s;
+}
+.choice:hover { border-color: var(--accent); transform: translateY(-2px); }
+.choice svg { width: 100%; max-width: 260px; height: auto; }
+.choice .tag { font-size: 15px; font-weight: 600; padding: 7px 20px; border-radius: 999px; background: var(--ink); color: var(--bg); }
+.choice.picked { border-color: var(--accent); background: var(--accent-soft); }
+.choice.faded { opacity: 0.35; }
+.hint { text-align: center; color: var(--muted); font-size: 14px; margin-top: 18px; }
+.bar { height: 6px; background: var(--bg2); border-radius: 999px; overflow: hidden; margin-top: 16px; }
+.bar > i { display: block; height: 100%; background: var(--accent); width: 0; transition: width 0.2s; }
+.done { text-align: center; display: grid; gap: 16px; justify-items: center; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.stat { display: grid; gap: 2px; }
+.stat b { font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: 30px; }
+.stats { display: flex; gap: 28px; flex-wrap: wrap; margin: 10px 0 4px; }
+.archive { display: grid; grid-template-columns: 22px repeat(5, 1fr); gap: 4px; align-items: center; }
+.archive .cell { aspect-ratio: 1; background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.archive .cell svg { width: 92%; height: auto; }
+.archive .axis { font-size: 12px; color: var(--muted); text-align: center; }
+.weights { display: grid; gap: 6px; }
+.wrow { display: grid; grid-template-columns: 130px 1fr 52px; gap: 8px; align-items: center; font-size: 14px; }
+.wtrack { position: relative; height: 12px; background: var(--bg2); border-radius: 6px; }
+.wtrack::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted); }
+.wtrack i { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
+.small { font-size: 13px; }
+.preview { background: var(--accent-soft); color: var(--ink); border: 1px solid var(--line); border-radius: 14px; padding: 10px 16px; font-size: 14px; margin: -12px 0 18px; }
+.note { background: var(--bg2); border-radius: 14px; padding: 12px 16px; font-size: 14px; }
+textarea { width: 100%; min-height: 120px; font: 12px/1.4 ui-monospace, Menlo, monospace; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+@media (max-width: 560px) {
+  .brand small { display: none; }
+  .panel { padding: 18px; border-radius: 18px; }
+  .or { display: none; }
+  .duel { grid-template-columns: 1fr 1fr; }
+  .lede { font-size: 23px; }
+  .wrow { grid-template-columns: 96px 1fr 44px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Mochi <small>A preference study of machine creatures</small></div>
+    <button class="link" id="toResearch" type="button">Researcher</button>
+  </header>
+  <p class="preview" id="preview" hidden>Preview for the capstone committee. Ethics approval is pending, so no pick made here will be used in the study.</p>
+  <main id="app" aria-live="polite"></main>
+</div>
+<script>
+// ---- engine.js v1.1.0 (inlined by scripts/build.mjs)
+// Mochi engine: genome, rendering, pair scheduling, preference models and MAP-Elites breeding.
+// Pure functions over a plain JSON state, so the same code runs in the browser game
+// and in the Node simulation (sim/simulate.mjs). No DOM access in this file.
+
+const ENGINE_VERSION = "1.1.0";
+
+// ---------------------------------------------------------------- random numbers
+// mulberry32: small, fast, deterministic 32-bit generator.
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// FNV-1a hash of any list of values, used to derive one independent seed per decision.
+function hashSeed(...parts) {
+  let h = 0x811c9dc5;
+  const s = parts.join("|");
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+
+function rngFor(...parts) {
+  return mulberry32(hashSeed(...parts));
+}
+
+function normal(rng) {
+  // Box-Muller transform.
+  let u = 0;
+  while (u === 0) u = rng();
+  const v = rng();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// ---------------------------------------------------------------- genome
+// Every gene is stored on [0, 1] and mapped to a drawing range at render time.
+const GENES = [
+  { key: "headWidth", label: "Head width", group: "head", min: 0.72, max: 1.15, desc: "Width of the head" },
+  { key: "headHeight", label: "Head height", group: "head", min: 0.72, max: 1.08, desc: "Height of the head" },
+  { key: "headRoundness", label: "Head roundness", group: "head", min: 0.15, max: 1.0, desc: "Corner rounding, from boxy to fully round" },
+  { key: "earShape", label: "Ear shape", group: "ears", min: 0, max: 1, desc: "Pointed animal ears (0) to rounded machine panels (1)" },
+  { key: "earSize", label: "Ear size", group: "ears", min: 0.45, max: 1.2, desc: "Length of the ears" },
+  { key: "earSpread", label: "Ear spread", group: "ears", min: -0.15, max: 0.35, desc: "How far the ears tilt outward" },
+  { key: "eyeSize", label: "Eye size", group: "eyes", min: 5, max: 17, desc: "Radius of each eye" },
+  { key: "eyeSpacing", label: "Eye spacing", group: "eyes", min: 17, max: 33, desc: "Distance from the centre line to each eye" },
+  { key: "eyeHeight", label: "Eye height", group: "eyes", min: -14, max: 12, desc: "Eye position, from high on the face (0) to low (1)" },
+  { key: "eyeShine", label: "Eye shine", group: "eyes", min: 0, max: 1, desc: "Size of the highlight in each eye" },
+  { key: "mouth", label: "Mouth", group: "face", min: 0, max: 1, desc: "No mouth below 0.2, then an increasingly curved smile" },
+  { key: "mouthWidth", label: "Mouth width", group: "face", min: 6, max: 22, desc: "Width of the mouth" },
+  { key: "blush", label: "Blush", group: "face", min: 0, max: 1, desc: "Strength of the cheek blush" },
+  { key: "bodySize", label: "Body size", group: "body", min: 0.62, max: 1.18, desc: "Body size relative to the head" },
+  { key: "limbLength", label: "Leg length", group: "body", min: 0, max: 1, desc: "Stubby feet (0) to visible legs (1)" },
+  { key: "antenna", label: "Antenna", group: "machine", min: 0, max: 1, desc: "No antenna below 0.3, then a longer antenna" },
+  { key: "facePlate", label: "Face plate", group: "machine", min: 0, max: 1, desc: "Size of the light visor around the face" },
+  { key: "hue", label: "Hue", group: "colour", min: 14, max: 214, desc: "Body hue in degrees, from warm orange (0) to cool blue (1)" },
+  { key: "saturation", label: "Saturation", group: "colour", min: 0.14, max: 0.6, desc: "Colour intensity" },
+  { key: "lightness", label: "Lightness", group: "colour", min: 0.36, max: 0.7, desc: "Colour lightness" },
+];
+const D = GENES.length; // 20
+const GENE_INDEX = Object.fromEntries(GENES.map((g, i) => [g.key, i]));
+
+function decode(genes) {
+  const o = {};
+  GENES.forEach((g, i) => (o[g.key] = lerp(g.min, g.max, genes[i])));
+  o._raw = genes;
+  return o;
+}
+
+function randomGenome(rng) {
+  return Array.from({ length: D }, () => rng());
+}
+
+// ---------------------------------------------------------------- rendering
+function hsl(h, s, l) {
+  return `hsl(${h.toFixed(1)} ${(s * 100).toFixed(1)}% ${(l * 100).toFixed(1)}%)`;
+}
+
+// Draw a creature as an SVG string from its genome alone. Same genome, same picture.
+function renderSVG(genes, { size = 200, title = "" } = {}) {
+  const p = decode(genes);
+  const g = genes;
+  const body = hsl(p.hue, p.saturation, p.lightness);
+  const bodyDark = hsl(p.hue, p.saturation, Math.max(0.2, p.lightness - 0.14));
+  const plate = hsl(p.hue, Math.min(0.35, p.saturation * 0.5), 0.93);
+  const blushCol = `rgba(231,140,120,${(0.15 + 0.7 * g[GENE_INDEX.blush]).toFixed(3)})`;
+  const ink = "#2A231E";
+  const cx = 100;
+
+  // Head geometry.
+  const hw = 62 * p.headWidth;
+  const hh = 50 * p.headHeight;
+  const hcy = 92;
+  const rx = Math.max(6, p.headRoundness * Math.min(hw, hh));
+  const headTop = hcy - hh;
+
+  // Body and legs.
+  const bw = 48 * p.bodySize;
+  const bh = 31 * p.bodySize;
+  const legLen = 4 + 18 * p.limbLength;
+  const footY = Math.min(186, hcy + hh + 2 + bh * 1.2 + legLen);
+  const bcy = footY - legLen - bh * 0.55;
+
+  const parts = [];
+  if (title) parts.push(`<title>${title}</title>`);
+
+  // Antenna.
+  if (g[GENE_INDEX.antenna] >= 0.3) {
+    const len = Math.min(headTop - 14, 8 + 30 * ((g[GENE_INDEX.antenna] - 0.3) / 0.7));
+    parts.push(`<path d="M${cx} ${headTop + 4} L${cx} ${headTop - len}" stroke="${bodyDark}" stroke-width="5" stroke-linecap="round"/>`);
+    parts.push(`<circle cx="${cx}" cy="${headTop - len - 3}" r="6.5" fill="#E7967F"/>`);
+  }
+
+  // Ears: blend from a pointed triangle to a rounded panel.
+  const es = p.earSize;
+  const spread = p.earSpread;
+  const earShape = g[GENE_INDEX.earShape];
+  for (const side of [-1, 1]) {
+    const baseX = cx + side * hw * 0.62;
+    const baseY = headTop + hh * 0.45;
+    if (earShape < 0.5) {
+      const tipX = baseX + side * (spread * 40 + 4);
+      const tipY = headTop - 30 * es;
+      const innerX = cx + side * hw * 0.12;
+      const t = earShape * 2; // 0..1 softening of the tip
+      const ctrl = `${lerp(tipX, (baseX + innerX) / 2, t * 0.35)} ${lerp(tipY, (baseY + tipY) / 2, t * 0.35)}`;
+      parts.push(`<path d="M${baseX + side * 6} ${baseY} Q${ctrl} ${tipX} ${tipY} Q${ctrl} ${innerX} ${headTop + 6} Z" fill="${body}" stroke="${body}" stroke-width="${2 + 10 * t}" stroke-linejoin="round"/>`);
+      parts.push(`<path d="M${lerp(baseX, innerX, 0.2)} ${baseY - 8} L${lerp(tipX, innerX, 0.18)} ${lerp(tipY, baseY, 0.25)} L${lerp(innerX, baseX, 0.15)} ${headTop + 10} Z" fill="${plate}" opacity="${(0.8 - t * 0.5).toFixed(2)}"/>`);
+    } else {
+      const pw = 22 * es + 6;
+      const ph = 46 * es + 10;
+      const px = cx + side * (hw + 2 + spread * 18) - pw / 2;
+      const py = hcy - ph / 2 - 6;
+      const r = lerp(4, pw / 2, (earShape - 0.5) * 2);
+      parts.push(`<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="${r}" fill="${body}"/>`);
+    }
+  }
+
+  // Legs and feet.
+  for (const side of [-1, 1]) {
+    const fx = cx + side * bw * 0.5;
+    if (legLen > 7) parts.push(`<rect x="${fx - 6}" y="${footY - legLen}" width="12" height="${legLen}" rx="6" fill="${bodyDark}"/>`);
+    parts.push(`<ellipse cx="${fx}" cy="${footY}" rx="15" ry="8" fill="${body}"/>`);
+  }
+
+  // Body with a belly panel.
+  parts.push(`<ellipse cx="${cx}" cy="${bcy}" rx="${bw}" ry="${bh}" fill="${body}"/>`);
+  parts.push(`<ellipse cx="${cx}" cy="${bcy + bh * 0.22}" rx="${bw * 0.55}" ry="${bh * 0.5}" fill="${plate}" opacity="0.85"/>`);
+
+  // Head.
+  parts.push(`<rect x="${cx - hw}" y="${hcy - hh}" width="${hw * 2}" height="${hh * 2}" rx="${rx}" fill="${body}"/>`);
+
+  // Face plate (visor).
+  const fp = g[GENE_INDEX.facePlate];
+  if (fp > 0.08) {
+    const fw = hw * lerp(0.45, 0.82, fp);
+    const fh = hh * lerp(0.4, 0.78, fp);
+    const frx = Math.min(fw, fh) * lerp(0.4, 1, p.headRoundness);
+    parts.push(`<rect x="${cx - fw}" y="${hcy + 4 - fh}" width="${fw * 2}" height="${fh * 2}" rx="${frx}" fill="${plate}"/>`);
+  }
+
+  // Eyes.
+  const er = p.eyeSize;
+  const ex = Math.min(p.eyeSpacing, hw - er - 4);
+  const ey = hcy + p.eyeHeight;
+  const shine = g[GENE_INDEX.eyeShine];
+  for (const side of [-1, 1]) {
+    const x = cx + side * ex;
+    parts.push(`<ellipse cx="${x}" cy="${ey}" rx="${er}" ry="${er * 1.08}" fill="${ink}"/>`);
+    if (shine > 0.05) {
+      parts.push(`<circle cx="${x + er * 0.35}" cy="${ey - er * 0.4}" r="${(0.12 + 0.28 * shine) * er + 0.6}" fill="#FFFDFA"/>`);
+      parts.push(`<circle cx="${x - er * 0.3}" cy="${ey + er * 0.35}" r="${(0.05 + 0.1 * shine) * er}" fill="#FFFDFA" opacity="0.8"/>`);
+    }
+  }
+
+  // Cheeks.
+  const cheekY = ey + er + 6;
+  for (const side of [-1, 1]) {
+    parts.push(`<ellipse cx="${cx + side * (ex + er * 0.6 + 4)}" cy="${cheekY}" rx="10" ry="6" fill="${blushCol}"/>`);
+  }
+
+  // Mouth.
+  const m = g[GENE_INDEX.mouth];
+  if (m >= 0.2) {
+    const curve = 1 + 9 * ((m - 0.2) / 0.8);
+    const mw = p.mouthWidth / 2;
+    const my = Math.min(hcy + hh - 8, ey + er + 9);
+    parts.push(`<path d="M${cx - mw} ${my} Q${cx} ${my + curve} ${cx + mw} ${my}" stroke="${ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`);
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title}"` : ""}>${parts.join("")}</svg>`;
+}
+
+// ---------------------------------------------------------------- descriptors for MAP-Elites
+// Two behaviour descriptors on [0, 1]. They define the archive grid that keeps variety.
+//   babyness: large low eyes, a round head and a small body (Lorenz's baby schema)
+//   machineness: antenna, face plate and panel ears
+function descriptors(genes) {
+  const G = GENE_INDEX;
+  const babyness = (genes[G.eyeSize] + genes[G.eyeHeight] + genes[G.headRoundness] + (1 - genes[G.bodySize])) / 4;
+  const machineness = (genes[G.antenna] + genes[G.facePlate] + genes[G.earShape]) / 3;
+  return [babyness, machineness];
+}
+
+const GRID = 5;
+function cellOf(genes) {
+  const [a, b] = descriptors(genes);
+  const i = Math.min(GRID - 1, Math.floor(a * GRID));
+  const j = Math.min(GRID - 1, Math.floor(b * GRID));
+  return `${i},${j}`;
+}
+
+// ---------------------------------------------------------------- creature-level Bradley-Terry
+// Minorisation-maximisation (Hunter, 2004) with a weak prior: every item gets one virtual
+// win and one virtual loss against a reference item of strength 1, so scores stay finite.
+// picks: [{winner, loser}]. Returns {id: log strength}. Cost O(iterations * picks).
+function fitItemBT(items, picks, { iterations = 200, tol = 1e-9 } = {}) {
+  const ids = [...items];
+  const idx = new Map(ids.map((id, i) => [id, i]));
+  const n = ids.length;
+  const wins = new Float64Array(n).fill(1); // prior virtual win
+  const pairs = [];
+  for (const p of picks) {
+    const w = idx.get(p.winner);
+    const l = idx.get(p.loser);
+    if (w === undefined || l === undefined) continue;
+    wins[w] += 1;
+    pairs.push([w, l]);
+  }
+  let s = new Float64Array(n).fill(1);
+  for (let it = 0; it < iterations; it++) {
+    const denom = new Float64Array(n);
+    for (const [a, b] of pairs) {
+      const inv = 1 / (s[a] + s[b]);
+      denom[a] += inv;
+      denom[b] += inv;
+    }
+    // Prior comparisons against the reference item of strength 1 (two per item).
+    const next = new Float64Array(n);
+    let change = 0;
+    let logSum = 0;
+    for (let i = 0; i < n; i++) {
+      next[i] = wins[i] / (denom[i] + 2 / (s[i] + 1));
+      logSum += Math.log(next[i]);
+    }
+    const gm = Math.exp(logSum / n);
+    for (let i = 0; i < n; i++) {
+      next[i] /= gm;
+      change = Math.max(change, Math.abs(Math.log(next[i]) - Math.log(s[i])));
+    }
+    s = next;
+    if (change < tol) break;
+  }
+  const out = {};
+  ids.forEach((id, i) => (out[id] = Math.log(s[i])));
+  return out;
+}
+
+// ---------------------------------------------------------------- feature-level Bradley-Terry
+// P(left chosen) = sigmoid(b + w . (x_left - x_right)), with x = genes - 0.5.
+// This is a Bradley-Terry model whose strengths are built from features, fitted as an
+// L2-regularised logistic regression by Newton's method. b captures any left/right bias.
+// rows: [{xl: genes, xr: genes, y: 1 if left chosen else 0}]. Cost per iteration O(m d^2 + d^3).
+const sigmoid = (z) => 1 / (1 + Math.exp(-z));
+
+function designRow(xl, xr) {
+  const z = new Float64Array(D + 1);
+  z[0] = 1;
+  for (let k = 0; k < D; k++) z[k + 1] = xl[k] - xr[k];
+  return z;
+}
+
+function solve(A, b) {
+  // Gaussian elimination with partial pivoting; A is small (21 x 21).
+  const n = b.length;
+  const M = A.map((row, i) => [...row, b[i]]);
+  for (let c = 0; c < n; c++) {
+    let piv = c;
+    for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[piv][c])) piv = r;
+    [M[c], M[piv]] = [M[piv], M[c]];
+    for (let r = c + 1; r < n; r++) {
+      const f = M[r][c] / M[c][c];
+      for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k];
+    }
+  }
+  const x = new Array(n).fill(0);
+  for (let r = n - 1; r >= 0; r--) {
+    let acc = M[r][n];
+    for (let k = r + 1; k < n; k++) acc -= M[r][k] * x[k];
+    x[r] = acc / M[r][r];
+  }
+  return x;
+}
+
+function fitFeatureBT(rows, { lambda = 1.0, iterations = 50, tol = 1e-8 } = {}) {
+  const P = D + 1;
+  let w = new Array(P).fill(0);
+  const Z = rows.map((r) => designRow(r.xl, r.xr));
+  const y = rows.map((r) => r.y);
+  for (let it = 0; it < iterations; it++) {
+    const H = Array.from({ length: P }, () => new Array(P).fill(0));
+    const grad = new Array(P).fill(0);
+    for (let i = 0; i < Z.length; i++) {
+      const z = Z[i];
+      let eta = 0;
+      for (let k = 0; k < P; k++) eta += w[k] * z[k];
+      const p = sigmoid(eta);
+      const r = y[i] - p;
+      const v = p * (1 - p);
+      for (let a = 0; a < P; a++) {
+        grad[a] += r * z[a];
+        const va = v * z[a];
+        for (let b = a; b < P; b++) H[a][b] += va * z[b];
+      }
+    }
+    for (let a = 0; a < P; a++) {
+      for (let b = 0; b < a; b++) H[a][b] = H[b][a];
+      if (a > 0) {
+        // No penalty on the side-bias intercept.
+        H[a][a] += lambda;
+        grad[a] -= lambda * w[a];
+      }
+      H[a][a] += 1e-9;
+    }
+    const step = solve(H, grad);
+    let maxStep = 0;
+    w = w.map((wk, k) => {
+      maxStep = Math.max(maxStep, Math.abs(step[k]));
+      return wk + step[k];
+    });
+    if (maxStep < tol) break;
+  }
+  return { bias: w[0], weights: w.slice(1) };
+}
+
+function predictLeft(model, xl, xr) {
+  let eta = model.bias;
+  for (let k = 0; k < D; k++) eta += model.weights[k] * (xl[k] - xr[k]);
+  return sigmoid(eta);
+}
+
+// ---------------------------------------------------------------- study configuration
+const LINEAGES = {
+  home: { id: "home", question: "Which would you rather have at home?", short: "Home" },
+  trust: { id: "trust", question: "Which would you trust?", short: "Trust" },
+};
+const CONFIG = {
+  activeSize: 16, // creatures shown in one generation
+  eliteCount: 8, // carried over from the archive each generation
+  picksPerGeneration: 40, // one ten-minute session
+  roundsPerSession: 40,
+  mutationRate: 0.3, // chance that each gene mutates
+  mutationSigma: 0.1, // standard deviation of a mutation on [0, 1]
+};
+
+// ---------------------------------------------------------------- state
+function newState(seed = 20261101) {
+  const state = {
+    engine: ENGINE_VERSION,
+    seed,
+    created: null,
+    config: { ...CONFIG },
+    creatures: {},
+    counts: {},
+    lineages: {},
+    picks: [],
+    sessions: [],
+  };
+  for (const id of Object.keys(LINEAGES)) {
+    const rng = rngFor(seed, id, "gen", 0);
+    const active = [];
+    for (let i = 0; i < CONFIG.activeSize; i++) {
+      const c = makeCreature(state, id, 0, randomGenome(rng), null);
+      active.push(c.id);
+    }
+    state.lineages[id] = { id, gen: 0, active, archive: {}, scores: {}, history: [] };
+  }
+  return state;
+}
+
+// Creature ids are "<H|T><generation>-<index>". A counter per lineage and generation keeps
+// creation O(1); older saved states without the counter fall back to counting once.
+function makeCreature(state, lineage, gen, genes, parents) {
+  state.counts = state.counts || {};
+  const key = `${lineage}:${gen}`;
+  if (state.counts[key] === undefined) {
+    state.counts[key] = Object.values(state.creatures).filter((c) => c.lineage === lineage && c.gen === gen).length;
+  }
+  const n = state.counts[key]++;
+  const id = `${lineage === "home" ? "H" : "T"}${gen}-${String(n + 1).padStart(2, "0")}`;
+  const c = { id, lineage, gen, genes: genes.map((v) => Math.round(clamp01(v) * 1e6) / 1e6), parents, cell: null };
+  c.cell = cellOf(c.genes);
+  state.creatures[id] = c;
+  return c;
+}
+
+function lineagePicks(state, lineageId) {
+  return state.picks.filter((p) => p.lineage === lineageId);
+}
+
+// Picks of the lineage's current generation, oldest first. Picks are appended in time order,
+// so the current generation is a suffix of the lineage's picks: scan backwards and stop at the
+// first earlier-generation pick. Cost O(picks since this generation began), not O(all picks).
+function currentGenerationPicks(state, lineageId) {
+  const L = state.lineages[lineageId];
+  const out = [];
+  for (let i = state.picks.length - 1; i >= 0; i--) {
+    const p = state.picks[i];
+    if (p.lineage !== lineageId) continue;
+    if (p.gen !== L.gen) break;
+    out.push(p);
+  }
+  return out.reverse();
+}
+
+function picksThisGeneration(state, lineageId) {
+  return currentGenerationPicks(state, lineageId).length;
+}
+
+// ---------------------------------------------------------------- pair scheduling
+// Balanced design: show the least-compared creature next, against the least-compared
+// partner it has not yet met this generation. Ties are broken by a seeded draw, and
+// the screen side is randomised to counterbalance any left/right bias.
+// Cost O(g + n log n): g picks so far in this generation (at most 40), n = 16 creatures.
+function nextPair(state, lineageId) {
+  const L = state.lineages[lineageId];
+  const genPicks = currentGenerationPicks(state, lineageId);
+  const rng = rngFor(state.seed, lineageId, L.gen, "pair", genPicks.length);
+  const count = Object.fromEntries(L.active.map((id) => [id, 0]));
+  const met = new Set();
+  for (const p of genPicks) {
+    count[p.left] = (count[p.left] || 0) + 1;
+    count[p.right] = (count[p.right] || 0) + 1;
+    met.add([p.left, p.right].sort().join("~"));
+  }
+  const jitter = Object.fromEntries(L.active.map((id) => [id, rng()]));
+  const order = [...L.active].sort((a, b) => count[a] - count[b] || jitter[a] - jitter[b]);
+  const a = order[0];
+  let partners = order.slice(1).filter((b) => !met.has([a, b].sort().join("~")));
+  if (partners.length === 0) partners = order.slice(1);
+  const b = partners[0];
+  return rng() < 0.5 ? { left: a, right: b } : { left: b, right: a };
+}
+
+// ---------------------------------------------------------------- recording a pick
+function recordPick(state, { lineage, left, right, chosen, session, participant, round, ms, at }) {
+  const L = state.lineages[lineage];
+  const pick = {
+    n: state.picks.length + 1,
+    lineage,
+    gen: L.gen,
+    session,
+    participant,
+    round,
+    left,
+    right,
+    chosen,
+    side: chosen === left ? "left" : "right",
+    ms: ms ?? null,
+    at: at ?? null,
+  };
+  state.picks.push(pick);
+  let advanced = false;
+  if (picksThisGeneration(state, lineage) >= state.config.picksPerGeneration) {
+    advanceGeneration(state, lineage);
+    advanced = true;
+  }
+  return { pick, advanced };
+}
+
+// ---------------------------------------------------------------- MAP-Elites generation step
+// 1. Refit creature-level Bradley-Terry on every pick in the lineage so far.
+// 2. Place each scored creature in its descriptor cell, keeping the higher score.
+// 3. Next generation = up to eliteCount elites drawn from the archive + offspring
+//    from two archive parents (uniform crossover, Gaussian mutation).
+function advanceGeneration(state, lineageId) {
+  const L = state.lineages[lineageId];
+  const picks = lineagePicks(state, lineageId).map((p) => ({
+    winner: p.chosen,
+    loser: p.chosen === p.left ? p.right : p.left,
+  }));
+  const seen = new Set();
+  picks.forEach((p) => {
+    seen.add(p.winner);
+    seen.add(p.loser);
+  });
+  const scores = fitItemBT(seen, picks);
+  L.scores = scores;
+
+  // Rebuild the archive from all compared creatures with their refreshed scores.
+  const archive = {};
+  for (const id of seen) {
+    const c = state.creatures[id];
+    const cur = archive[c.cell];
+    if (!cur || scores[id] > scores[cur]) archive[c.cell] = id;
+  }
+  L.archive = archive;
+
+  const rng = rngFor(state.seed, lineageId, "gen", L.gen + 1);
+  const elites = Object.values(archive);
+  // Elites: the best-scoring elites, so strong creatures keep being tested against newcomers.
+  const keep = [...elites].sort((a, b) => scores[b] - scores[a]).slice(0, state.config.eliteCount);
+  const nextGen = L.gen + 1;
+  const offspring = [];
+  const parentsPool = elites.length >= 2 ? elites : [...seen];
+  while (keep.length + offspring.length < state.config.activeSize) {
+    const pa = parentsPool[Math.floor(rng() * parentsPool.length)];
+    let pb = parentsPool[Math.floor(rng() * parentsPool.length)];
+    if (pb === pa && parentsPool.length > 1) pb = parentsPool[(parentsPool.indexOf(pa) + 1) % parentsPool.length];
+    const ga = state.creatures[pa].genes;
+    const gb = state.creatures[pb].genes;
+    const child = ga.map((v, k) => {
+      let x = rng() < 0.5 ? v : gb[k];
+      if (rng() < state.config.mutationRate) x += state.config.mutationSigma * normal(rng);
+      return clamp01(x);
+    });
+    offspring.push(makeCreature(state, lineageId, nextGen, child, [pa, pb]).id);
+  }
+  L.history.push({
+    gen: L.gen,
+    picks: picksThisGeneration(state, lineageId),
+    archiveCells: Object.keys(archive).length,
+    best: keep[0] ?? null,
+    bestScore: keep[0] ? scores[keep[0]] : null,
+    meanGenes: meanGenes(L.active.map((id) => state.creatures[id].genes)),
+  });
+  L.gen = nextGen;
+  L.active = [...keep, ...offspring];
+  return L;
+}
+
+function meanGenes(list) {
+  const m = new Array(D).fill(0);
+  if (!list.length) return m;
+  for (const g of list) for (let k = 0; k < D; k++) m[k] += g[k] / list.length;
+  return m.map((v) => Math.round(v * 1e4) / 1e4);
+}
+
+// ---------------------------------------------------------------- export helpers
+function picksToRows(state, lineageId = null) {
+  return state.picks
+    .filter((p) => !lineageId || p.lineage === lineageId)
+    .map((p) => ({
+      xl: state.creatures[p.left].genes.map((v) => v - 0.5),
+      xr: state.creatures[p.right].genes.map((v) => v - 0.5),
+      y: p.chosen === p.left ? 1 : 0,
+      pick: p,
+    }));
+}
+
+function picksCSV(state) {
+  const head = ["n", "lineage", "gen", "session", "participant", "round", "left", "right", "chosen", "side", "ms", "at"];
+  const geneHead = [];
+  for (const s of ["left", "right"]) for (const g of GENES) geneHead.push(`${s}_${g.key}`);
+  const lines = [[...head, ...geneHead].join(",")];
+  for (const p of state.picks) {
+    const row = head.map((h) => (p[h] === null || p[h] === undefined ? "" : String(p[h]).replace(/,/g, ";")));
+    for (const s of ["left", "right"]) for (const v of state.creatures[p[s]].genes) row.push(v);
+    lines.push(row.join(","));
+  }
+  return lines.join("\n");
+}
+
+function creaturesCSV(state) {
+  const lines = [["id", "lineage", "gen", "parent_a", "parent_b", "cell", ...GENES.map((g) => g.key)].join(",")];
+  for (const c of Object.values(state.creatures)) {
+    lines.push([c.id, c.lineage, c.gen, c.parents?.[0] ?? "", c.parents?.[1] ?? "", `"${c.cell}"`, ...c.genes].join(","));
+  }
+  return lines.join("\n");
+}
+
+// ---------------------------------------------------------------- replay
+// The whole study is a deterministic function of the seed and the ordered pick log.
+// Replaying the log rebuilds every generation, archive and creature exactly.
+function replay(seed, picks) {
+  const state = newState(seed);
+  for (const p of [...picks].sort((a, b) => a.n - b.n)) {
+    const L = state.lineages[p.lineage];
+    if (!state.creatures[p.left] || !state.creatures[p.right]) throw new Error(`Pick ${p.n} names a creature that does not exist at replay`);
+    if (p.gen !== L.gen) throw new Error(`Pick ${p.n} expected generation ${p.gen}, replay is at ${L.gen}`);
+    recordPick(state, p);
+  }
+  return state;
+}
+
+// ---------------------------------------------------------------- consistency check
+function stateFingerprint(state) {
+  return hashSeed(JSON.stringify(Object.values(state.lineages).map((L) => [L.id, L.gen, L.active, L.archive])), Object.keys(state.creatures).length);
+}
+
+
+// ======================================================================= app
+// Storage. The study database (artifact capability "db") is the record of truth: one
+// document per pick in "picks". The whole study state is rebuilt from that log with
+// replay(), so nothing else needs storing. A copy is kept in this browser as a backup
+// and for running the game as a plain file (GitHub Pages or offline).
+// STUDY_OPEN stays false until the Minerva Human Subjects Research committee approves the study.
+// While it is false the game runs as a preview: picks go to separate "preview-" collections
+// and a separate browser store, and a banner says that no preview pick enters the study.
+const STUDY_OPEN = false;
+const NS = STUDY_OPEN ? "" : "preview-";
+const STORE_KEY = `mochi-${NS}state-v1`;
+const SEED = 20261101;
+const app = document.getElementById("app");
+let state = null;
+let db = null;
+let downloads = null;
+let session = null;
+let storeMode = "browser"; // "database" once the shared store answers
+let storeNote = "";
+let writeChain = Promise.resolve();
+
+function freshState() {
+  const s = newState(SEED);
+  s.created = new Date().toISOString();
+  return s;
+}
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && s.engine && s.lineages && s.seed === SEED) return s;
+    }
+  } catch (e) { /* storage unavailable: run in memory */ }
+  return freshState();
+}
+function saveLocal() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* in-memory only */ }
+}
+state = loadLocal();
+
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej({ code: "timeout" }), ms))]);
+}
+
+async function fetchAll(collection, orderField) {
+  const out = [];
+  let last = null;
+  for (;;) {
+    let q = db.collection(collection).orderBy(orderField).limit(1000);
+    if (last !== null) q = db.collection(collection).where(orderField, ">", last).orderBy(orderField).limit(1000);
+    const snap = await withTimeout(q.get(), 10000);
+    snap.docs.forEach((d) => out.push(d.data()));
+    if (snap.size < 1000) break;
+    last = snap.docs[snap.docs.length - 1].data()[orderField];
+  }
+  return out;
+}
+
+// Rebuild the state from the shared pick log. Picks only in this browser (written while the
+// database was unreachable) are uploaded afterwards so both copies agree.
+async function syncFromDatabase() {
+  if (!db) return;
+  try {
+    const picks = await fetchAll(`${NS}picks`, "n");
+    const sessions = await fetchAll(`${NS}sessions`, "startedAt").catch(() => []);
+    const remote = picks.length ? replay(SEED, picks) : freshState();
+    remote.sessions = sessions;
+    remote.created = state.created;
+    if (state.picks.length > remote.picks.length && state.picks.slice(0, remote.picks.length).every((p, i) => p.chosen === remote.picks[i].chosen && p.left === remote.picks[i].left)) {
+      for (const p of state.picks.slice(remote.picks.length)) queueWrite(`${NS}picks/p${String(p.n).padStart(6, "0")}`, p);
+    } else {
+      state = remote;
+    }
+    storeMode = "database";
+    storeNote = "";
+    saveLocal();
+  } catch (e) {
+    storeMode = "browser";
+    storeNote = "The study database could not be reached, so picks are being kept in this browser for now.";
+  }
+}
+
+function queueWrite(path, data) {
+  if (!db) return;
+  writeChain = writeChain.then(async () => {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try { await db.doc(path).set({ ...data }); return; } catch (e) {
+        if (e && e.code === "unavailable" && attempt === 0) { await new Promise((r) => setTimeout(r, 400 + Math.random() * 600)); continue; }
+        storeMode = "browser";
+        storeNote = e && e.code === "quota_exceeded" ? "The study database is full. Download the data now." : "A pick could not be saved to the study database. It is kept in this browser.";
+        return;
+      }
+    }
+  });
+}
+
+// One running session per lineage across devices: a short cooperative lease.
+async function leaseLineage(lineage, holder) {
+  if (!db) return true;
+  try {
+    const r = await withTimeout(db.doc(`${NS}locks/${lineage}`).acquire({ holder, ttlMs: 120000 }), 8000);
+    return !!r.acquired;
+  } catch (e) { return true; }
+}
+
+(async () => {
+  try {
+    if (window.claude && typeof window.claude.use === "function") {
+      db = await window.claude.use("db");
+      downloads = await window.claude.use("downloads");
+    }
+  } catch (e) { db = null; }
+  if (db) {
+    await syncFromDatabase();
+    refreshCurrentView();
+  }
+})();
+
+function refreshCurrentView() {
+  if (!session && app.dataset.view === "research") showResearch();
+}
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function chooseLineage() {
+  const forced = new URLSearchParams(location.search).get("lineage");
+  if (forced && LINEAGES[forced]) return forced;
+  const counts = Object.keys(LINEAGES).map((id) => [id, state.picks.filter((p) => p.lineage === id).length]);
+  counts.sort((a, b) => a[1] - b[1]);
+  return counts[0][0];
+}
+
+// ----------------------------------------------------------------- consent
+function showConsent() {
+  session = null;
+  app.dataset.view = "consent";
+  app.innerHTML = `
+  <section class="panel consent">
+    <div>
+      <p class="lede">Help us find out which machine creatures people like and trust.</p>
+      <p class="muted">This is part of a Minerva University capstone study by Mahean (Computational Sciences), advised by Prof. Volkan.</p>
+    </div>
+    <ul>
+      <li>You will see two small machine creatures at a time and pick the one that fits a single question. There are 40 rounds, which take about ten minutes.</li>
+      <li>Your picks breed the next generation of creatures, so later players see what earlier players chose.</li>
+      <li>We record your picks, how long each pick took, the time of each pick and a participant code. The study stores no name, email or other detail about you.</li>
+      <li>Taking part is voluntary. You can stop at any time by closing the page, and you can ask for your picks to be deleted by giving the researcher your code.</li>
+      <li>The coded pick data, without any link from codes to people, may be published as an open dataset.</li>
+      <li>Contact details for the researcher and for the ethics committee, and the approval reference, will appear here once the study is approved.</li>
+    </ul>
+    <label class="field">Participant code (from the researcher)
+      <input id="pcode" autocomplete="off" maxlength="12" placeholder="For example P01" value="${esc(sessionStorage.getItem("mochi-pcode") || "")}">
+    </label>
+    <label class="check"><input type="checkbox" id="agree"> <span>I am 18 or older, I have read the points above, and I agree to take part.</span></label>
+    <div class="row"><button class="btn primary" id="start" disabled>Start</button></div>
+  </section>`;
+  const agree = document.getElementById("agree");
+  const code = document.getElementById("pcode");
+  const start = document.getElementById("start");
+  const update = () => (start.disabled = !(agree.checked && /^[A-Za-z0-9-]{2,12}$/.test(code.value.trim())));
+  agree.addEventListener("change", update);
+  code.addEventListener("input", update);
+  update();
+  start.addEventListener("click", () => {
+    const pcode = code.value.trim().toUpperCase();
+    try { sessionStorage.setItem("mochi-pcode", pcode); } catch (e) {}
+    beginSession(pcode);
+  });
+}
+
+// ----------------------------------------------------------------- session
+async function beginSession(pcode) {
+  const start = document.getElementById("start");
+  if (start) { start.disabled = true; start.textContent = "Getting ready"; }
+  await syncFromDatabase();
+  const id = `s${Date.now().toString(36)}`;
+  const preferred = chooseLineage();
+  const order = [preferred, ...Object.keys(LINEAGES).filter((l) => l !== preferred)];
+  const forced = new URLSearchParams(location.search).get("lineage");
+  let lineage = null;
+  for (const l of forced && LINEAGES[forced] ? [forced] : order) {
+    if (await leaseLineage(l, id)) { lineage = l; break; }
+  }
+  if (!lineage) {
+    showMessage("Another session is running on a different device.", "Please wait a minute and try again, so two people do not breed the same generation at once.", "Try again", showConsent);
+    return;
+  }
+  session = { id, participant: pcode, lineage, round: 0, startedGen: state.lineages[lineage].gen, shownAt: 0, locked: false };
+  const rec = { id, participant: pcode, lineage, startedAt: new Date().toISOString(), simulated: false };
+  state.sessions.push(rec);
+  saveLocal();
+  queueWrite(`${NS}sessions/${id}`, rec);
+  showRound();
+}
+
+function showMessage(title, body, label, next) {
+  app.dataset.view = "message";
+  app.innerHTML = `<section class="panel done"><h2 style="font-size:30px">${esc(title)}</h2><p class="muted" style="max-width:560px">${esc(body)}</p><button class="btn primary" id="msgBtn">${esc(label)}</button></section>`;
+  document.getElementById("msgBtn").addEventListener("click", next);
+}
+
+function showRound() {
+  const L = state.lineages[session.lineage];
+  if (session.round >= state.config.roundsPerSession) return showDone();
+  const pair = nextPair(state, session.lineage);
+  session.pair = pair;
+  const r = session.round + 1;
+  const pct = (session.round / state.config.roundsPerSession) * 100;
+  app.dataset.view = "round";
+  app.innerHTML = `
+  <section class="panel">
+    <div class="pills">
+      <span class="pill round">Round ${r} of ${state.config.roundsPerSession}</span>
+      <span class="pill gen">Generation ${L.gen + 1}</span>
+    </div>
+    <h1 class="question">${esc(LINEAGES[session.lineage].question)}</h1>
+    <div class="duel">
+      <button class="choice" id="cA" aria-label="Choose creature A">${renderSVG(state.creatures[pair.left].genes, { size: 260 })}<span class="tag">Choose A</span></button>
+      <span class="or">or</span>
+      <button class="choice" id="cB" aria-label="Choose creature B">${renderSVG(state.creatures[pair.right].genes, { size: 260 })}<span class="tag">Choose B</span></button>
+    </div>
+    <div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
+    <p class="hint">Go with your first impression. You can also press the left or right arrow key.</p>
+  </section>`;
+  session.shownAt = performance.now();
+  session.locked = false;
+  document.getElementById("cA").addEventListener("click", () => choose("left"));
+  document.getElementById("cB").addEventListener("click", () => choose("right"));
+}
+
+function choose(side) {
+  if (!session || session.locked || !session.pair) return;
+  session.locked = true;
+  const { left, right } = session.pair;
+  const chosen = side === "left" ? left : right;
+  const ms = Math.round(performance.now() - session.shownAt);
+  session.round += 1;
+  const { pick } = recordPick(state, {
+    lineage: session.lineage, left, right, chosen, session: session.id,
+    participant: session.participant, round: session.round, ms, at: new Date().toISOString(),
+  });
+  saveLocal();
+  queueWrite(`${NS}picks/p${String(pick.n).padStart(6, "0")}`, pick);
+  if (pick.n % 8 === 0) leaseLineage(session.lineage, session.id);
+  const a = document.getElementById("cA");
+  const b = document.getElementById("cB");
+  (side === "left" ? a : b).classList.add("picked");
+  (side === "left" ? b : a).classList.add("faded");
+  setTimeout(showRound, 260);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!session || !session.pair || session.round >= state.config.roundsPerSession) return;
+  if (e.key === "ArrowLeft") choose("left");
+  if (e.key === "ArrowRight") choose("right");
+});
+
+function showDone() {
+  const L = state.lineages[session.lineage];
+  const best = L.history.length ? L.history[L.history.length - 1].best : null;
+  app.innerHTML = `
+  <section class="panel done">
+    <h2 style="font-size:34px">Thank you.</h2>
+    <p class="muted" style="max-width:560px">Your 40 picks are saved. This lineage is now on generation ${L.gen + 1}. Below is the creature the lineage currently rates highest.</p>
+    ${best ? renderSVG(state.creatures[best].genes, { size: 200, title: "Current top creature" }) : ""}
+    <div class="row" style="justify-content:center">
+      <button class="btn primary" id="again">Next player</button>
+    </div>
+  </section>`;
+  session.pair = null;
+  document.getElementById("again").addEventListener("click", showConsent);
+}
+
+// ----------------------------------------------------------------- researcher view
+function archiveGrid(L) {
+  let html = `<div class="archive" role="img" aria-label="MAP-Elites archive: rows are machine cues, columns are baby schema">`;
+  for (let j = GRID - 1; j >= 0; j--) {
+    html += `<div class="axis">${j === GRID - 1 ? "more" : j === 0 ? "less" : ""}</div>`;
+    for (let i = 0; i < GRID; i++) {
+      const id = L.archive[`${i},${j}`];
+      html += `<div class="cell" title="${id || "empty"}">${id ? renderSVG(state.creatures[id].genes, { size: 80, title: id }) : ""}</div>`;
+    }
+  }
+  html += `<div></div>${Array.from({ length: GRID }, (_, i) => `<div class="axis">${i === 0 ? "less" : i === GRID - 1 ? "more" : ""}</div>`).join("")}</div>
+  <p class="small muted">Columns: baby schema (eye size, low eyes, round head, small body). Rows: machine cues (antenna, face plate, panel ears). Each cell keeps its best creature.</p>`;
+  return html;
+}
+
+function weightBars(lineage) {
+  const rows = picksToRows(state, lineage);
+  if (rows.length < 40) return `<p class="small muted">The first model fit appears after 40 picks in this lineage.</p>`;
+  const m = fitFeatureBT(rows, { lambda: 1 });
+  const order = GENES.map((g, k) => [g, m.weights[k]]).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 8);
+  const max = Math.max(...order.map((o) => Math.abs(o[1])), 0.01);
+  return `<div class="weights">${order.map(([g, w]) => {
+    const pct = (Math.abs(w) / max) * 50;
+    const style = w >= 0 ? `left:50%;width:${pct}%;background:var(--accent)` : `right:50%;width:${pct}%;background:var(--sage)`;
+    return `<div class="wrow"><span>${g.label}</span><span class="wtrack"><i style="${style}"></i></span><span class="small">${w >= 0 ? "+" : ""}${w.toFixed(2)}</span></div>`;
+  }).join("")}</div>
+  <p class="small muted">Bradley-Terry weights from ${rows.length} picks, largest first. Positive means the feature raises the chance of being picked. Side bias: ${m.bias >= 0 ? "+" : ""}${m.bias.toFixed(2)}.</p>`;
+}
+
+function showResearch() {
+  session = null;
+  app.dataset.view = "research";
+  const people = new Set(state.picks.map((p) => p.participant)).size;
+  app.innerHTML = `
+  <section class="panel" style="display:grid;gap:22px">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="font-size:32px">Researcher view</h2>
+      <button class="btn ghost" id="back">Back to the game</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="small muted">Picks</span><b>${state.picks.length}</b></div>
+      <div class="stat"><span class="small muted">Sessions</span><b>${state.sessions.length}</b></div>
+      <div class="stat"><span class="small muted">Participant codes</span><b>${people}</b></div>
+      <div class="stat"><span class="small muted">Creatures</span><b>${Object.keys(state.creatures).length}</b></div>
+    </div>
+    <p class="note">${storeMode === "database" ? "Saving every pick to the shared study database." : "Saving picks in this browser only. Download the data after each session."}${storeNote ? " " + esc(storeNote) : ""}</p>
+    <div class="grid2">
+      ${Object.values(state.lineages).map((L) => `
+      <div class="panel" style="padding:20px;display:grid;gap:14px">
+        <h3 style="font-size:24px">${LINEAGES[L.id].short}: <span class="muted" style="font-size:18px">${esc(LINEAGES[L.id].question)}</span></h3>
+        <p class="small muted" style="margin:0">Generation ${L.gen + 1} · ${picksThisGeneration(state, L.id)} of ${state.config.picksPerGeneration} picks this generation · ${Object.keys(L.archive).length} of ${GRID * GRID} archive cells filled</p>
+        ${archiveGrid(L)}
+        <h3 style="font-size:20px">First model fit</h3>
+        ${weightBars(L.id)}
+      </div>`).join("")}
+    </div>
+    <div style="display:grid;gap:12px">
+      <h3 style="font-size:22px">Data</h3>
+      <div class="row">
+        <button class="btn primary" data-dl="picks">Download picks (CSV)</button>
+        <button class="btn ghost" data-dl="creatures">Creatures (CSV)</button>
+        <button class="btn ghost" data-dl="state">Full state (JSON)</button>
+      </div>
+      <textarea id="out" readonly aria-label="Export text" placeholder="Each export also appears here, so it can be copied if the download is declined."></textarea>
+      <div class="row"><button class="btn ghost" id="copy">Copy text</button><span class="small muted" id="copyMsg" role="status"></span></div>
+      <div class="row">
+        <label class="btn ghost" style="display:inline-block">Import state (JSON)<input type="file" id="imp" accept="application/json" hidden></label>
+        <button class="btn ghost" id="reset">Reset study</button>
+      </div>
+      <p class="small" id="resMsg" role="status"></p>
+      <p class="small muted">Data lives in this browser and, when available, is mirrored to the shared study database. The full study can be rebuilt from the pick log alone, since every generation is a deterministic function of the seed (${state.seed}) and the picks.</p>
+    </div>
+  </section>`;
+  document.getElementById("back").addEventListener("click", showConsent);
+  app.querySelectorAll("[data-dl]").forEach((b) => b.addEventListener("click", () => exportData(b.dataset.dl)));
+  document.getElementById("imp").addEventListener("change", importState);
+  const resetBtn = document.getElementById("reset");
+  resetBtn.addEventListener("click", async () => {
+    if (resetBtn.dataset.armed !== "1") {
+      resetBtn.dataset.armed = "1";
+      resetBtn.textContent = "Press again to delete all picks";
+      document.getElementById("resMsg").textContent = "This deletes every pick in this browser and in the study database. Download the data first.";
+      return;
+    }
+    resetBtn.disabled = true;
+    await resetStudy();
+    showResearch();
+  });
+  document.getElementById("copy").addEventListener("click", async () => {
+    const msg = document.getElementById("copyMsg");
+    const text = document.getElementById("out").value;
+    if (!text) { msg.textContent = "Choose an export first."; return; }
+    try { await navigator.clipboard.writeText(text); msg.textContent = "Copied."; } catch (e) {
+      document.getElementById("out").select();
+      msg.textContent = "Select-all is on. Press Ctrl+C or Cmd+C to copy.";
+    }
+  });
+}
+
+async function exportData(kind) {
+  const stamp = new Date().toISOString().slice(0, 10);
+  const files = {
+    picks: [`mochi-picks-${stamp}.csv`, () => picksCSV(state), "text/csv"],
+    creatures: [`mochi-creatures-${stamp}.csv`, () => creaturesCSV(state), "text/csv"],
+    state: [`mochi-state-${stamp}.json`, () => JSON.stringify(state), "application/json"],
+  };
+  const [name, make, type] = files[kind];
+  const text = make();
+  document.getElementById("out").value = text;
+  if (downloads) {
+    try { await downloads.save({ filename: name, data: text }); return; } catch (e) { return; /* declined: the text area still holds the export */ }
+  }
+  if (window.self === window.top) {
+    // Running as a plain file or on GitHub Pages: an ordinary download works.
+    const url = URL.createObjectURL(new Blob([text], { type }));
+    const a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+}
+
+async function resetStudy() {
+  if (db) {
+    for (const kind of ["picks", "sessions"]) {
+      const coll = `${NS}${kind}`;
+      try {
+        const docs = await fetchAll(coll, kind === "picks" ? "n" : "startedAt");
+        for (const d of docs) {
+          const id = kind === "picks" ? `p${String(d.n).padStart(6, "0")}` : d.id;
+          if (id) await db.doc(`${coll}/${id}`).delete();
+        }
+      } catch (e) { storeNote = "Some database records could not be deleted."; }
+    }
+  }
+  state = freshState();
+  saveLocal();
+}
+
+function importState(e) {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  f.text().then((t) => {
+    try {
+      const s = JSON.parse(t);
+      const rebuilt = replay(s.seed, s.picks);
+      if (stateFingerprint(rebuilt) !== stateFingerprint(s)) throw new Error("The file does not replay to the same state.");
+      rebuilt.sessions = s.sessions || [];
+      rebuilt.created = s.created || null;
+      state = rebuilt;
+      saveLocal();
+      for (const p of state.picks) queueWrite(`${NS}picks/p${String(p.n).padStart(6, "0")}`, p);
+      for (const se of state.sessions) if (se.id) queueWrite(`${NS}sessions/${se.id}`, { ...se, startedAt: se.startedAt || "" });
+      showResearch();
+    } catch (err) { const m = document.getElementById("resMsg"); if (m) m.textContent = "Could not import: " + err.message; }
+  });
+}
+
+if (!STUDY_OPEN) document.getElementById("preview").hidden = false;
+document.getElementById("toResearch").addEventListener("click", showResearch);
+if (new URLSearchParams(location.search).has("research")) showResearch(); else showConsent();
+</script>
+</body>
+</html>

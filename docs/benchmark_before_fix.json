@@ -1,0 +1,11 @@
+{
+  "note": "First benchmark, run with engine 1.0.0 before the bookkeeping fix (picksThisGeneration and makeCreature scanned the whole pick log and creature table on every pick). Recorded on 2026-11-01 from scripts/benchmark.mjs; the recordPick column did not exist yet.",
+  "node": "v22.23.4",
+  "rows": [
+    { "picks": 600, "advanceGeneration_ms": 5.614, "featureBT_ms": 16.335, "replay_ms": 22.3 },
+    { "picks": 1200, "advanceGeneration_ms": 10.486, "featureBT_ms": 4.6, "replay_ms": 93.88 },
+    { "picks": 2400, "advanceGeneration_ms": 15.518, "featureBT_ms": 6.506, "replay_ms": 269.76 },
+    { "picks": 4800, "advanceGeneration_ms": 43.983, "featureBT_ms": 12.959, "replay_ms": 1114.39 },
+    { "picks": 9600, "advanceGeneration_ms": 71.494, "featureBT_ms": 29.844, "replay_ms": 5022.6 }
+  ]
+}

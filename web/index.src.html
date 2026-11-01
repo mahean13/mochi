@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mochi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF6F0;
+  --bg2: #F3EADF;
+  --card: #FFFDFA;
+  --line: #E4D8C8;
+  --ink: #2A231E;
+  --muted: #6E6157;
+  --accent: #B8501F;
+  --accent-soft: #FBEDE4;
+  --sage: #5E7363;
+  --sage-soft: #EAEFEA;
+  --focus: #1F5FB8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1F1A16; --bg2: #2A231E; --card: #2E2722; --line: #463B33; --ink: #F3EADF;
+    --muted: #BFAE9F; --accent: #E07A45; --accent-soft: #3A2A20; --sage: #9BB3A0; --sage-soft: #26302A; --focus: #8FB4F0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1F1A16; --bg2: #2A231E; --card: #2E2722; --line: #463B33; --ink: #F3EADF;
+  --muted: #BFAE9F; --accent: #E07A45; --accent-soft: #3A2A20; --sage: #9BB3A0; --sage-soft: #26302A; --focus: #8FB4F0;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 400; margin: 0; line-height: 1.15; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+.brand { font-family: Fraunces, Georgia, serif; font-size: 26px; letter-spacing: 0.2px; }
+.brand small { font-family: Inter, sans-serif; font-size: 13px; color: var(--muted); margin-left: 8px; }
+.link { background: none; border: none; color: var(--muted); font-size: 14px; text-decoration: underline; padding: 6px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
+.lede { font-family: Fraunces, Georgia, serif; font-size: 28px; line-height: 1.25; margin: 0 0 14px; }
+.muted { color: var(--muted); }
+.btn { border: none; border-radius: 999px; padding: 12px 26px; font-weight: 600; font-size: 16px; }
+.btn.primary { background: var(--accent); color: #FFFDFA; }
+.btn.primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.ghost { background: var(--bg2); color: var(--ink); }
+.consent { display: grid; gap: 22px; }
+.consent ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.field { display: grid; gap: 6px; max-width: 320px; }
+.field input { font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.check { display: flex; gap: 10px; align-items: flex-start; }
+.check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+.pills { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pill { font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; }
+.pill.round { color: var(--accent); background: var(--accent-soft); }
+.pill.gen { color: var(--sage); background: var(--sage-soft); }
+.question { text-align: center; font-size: clamp(24px, 4vw, 38px); margin: 18px 0 26px; }
+.duel { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(8px, 3vw, 36px); align-items: center; }
+.or { font-family: Fraunces, Georgia, serif; color: var(--muted); font-size: 22px; }
+.choice {
+  background: var(--bg); border: 2px solid var(--line); border-radius: 24px; padding: clamp(10px, 2vw, 22px);
+  display: grid; justify-items: center; gap: 12px; color: var(--ink); transition: transform 0.12s, border-color 0.12s, background 0.12s;
+}
+.choice:hover { border-color: var(--accent); transform: translateY(-2px); }
+.choice svg { width: 100%; max-width: 260px; height: auto; }
+.choice .tag { font-size: 15px; font-weight: 600; padding: 7px 20px; border-radius: 999px; background: var(--ink); color: var(--bg); }
+.choice.picked { border-color: var(--accent); background: var(--accent-soft); }
+.choice.faded { opacity: 0.35; }
+.hint { text-align: center; color: var(--muted); font-size: 14px; margin-top: 18px; }
+.bar { height: 6px; background: var(--bg2); border-radius: 999px; overflow: hidden; margin-top: 16px; }
+.bar > i { display: block; height: 100%; background: var(--accent); width: 0; transition: width 0.2s; }
+.done { text-align: center; display: grid; gap: 16px; justify-items: center; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.stat { display: grid; gap: 2px; }
+.stat b { font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: 30px; }
+.stats { display: flex; gap: 28px; flex-wrap: wrap; margin: 10px 0 4px; }
+.archive { display: grid; grid-template-columns: 22px repeat(5, 1fr); gap: 4px; align-items: center; }
+.archive .cell { aspect-ratio: 1; background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.archive .cell svg { width: 92%; height: auto; }
+.archive .axis { font-size: 12px; color: var(--muted); text-align: center; }
+.weights { display: grid; gap: 6px; }
+.wrow { display: grid; grid-template-columns: 130px 1fr 52px; gap: 8px; align-items: center; font-size: 14px; }
+.wtrack { position: relative; height: 12px; background: var(--bg2); border-radius: 6px; }
+.wtrack::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted); }
+.wtrack i { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
+.small { font-size: 13px; }
+.preview { background: var(--accent-soft); color: var(--ink); border: 1px solid var(--line); border-radius: 14px; padding: 10px 16px; font-size: 14px; margin: -12px 0 18px; }
+.note { background: var(--bg2); border-radius: 14px; padding: 12px 16px; font-size: 14px; }
+textarea { width: 100%; min-height: 120px; font: 12px/1.4 ui-monospace, Menlo, monospace; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+@media (max-width: 560px) {
+  .brand small { display: none; }
+  .panel { padding: 18px; border-radius: 18px; }
+  .or { display: none; }
+  .duel { grid-template-columns: 1fr 1fr; }
+  .lede { font-size: 23px; }
+  .wrow { grid-template-columns: 96px 1fr 44px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Mochi <small>A preference study of machine creatures</small></div>
+    <button class="link" id="toResearch" type="button">Researcher</button>
+  </header>
+  <p class="preview" id="preview" hidden>Preview for the capstone committee. Ethics approval is pending, so no pick made here will be used in the study.</p>
+  <main id="app" aria-live="polite"></main>
+</div>
+<script>
+/*__ENGINE__*/
+
+// ======================================================================= app
+// Storage. The study database (artifact capability "db") is the record of truth: one
+// document per pick in "picks". The whole study state is rebuilt from that log with
+// replay(), so nothing else needs storing. A copy is kept in this browser as a backup
+// and for running the game as a plain file (GitHub Pages or offline).
+// STUDY_OPEN stays false until the Minerva Human Subjects Research committee approves the study.
+// While it is false the game runs as a preview: picks go to separate "preview-" collections
+// and a separate browser store, and a banner says that no preview pick enters the study.
+const STUDY_OPEN = false;
+const NS = STUDY_OPEN ? "" : "preview-";
+const STORE_KEY = `mochi-${NS}state-v1`;
+const SEED = 20261101;
+const app = document.getElementById("app");
+let state = null;
+let db = null;
+let downloads = null;
+let session = null;
+let storeMode = "browser"; // "database" once the shared store answers
+let storeNote = "";
+let writeChain = Promise.resolve();
+
+function freshState() {
+  const s = newState(SEED);
+  s.created = new Date().toISOString();
+  return s;
+}
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && s.engine && s.lineages && s.seed === SEED) return s;
+    }
+  } catch (e) { /* storage unavailable: run in memory */ }
+  return freshState();
+}
+function saveLocal() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* in-memory only */ }
+}
+state = loadLocal();
+
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej({ code: "timeout" }), ms))]);
+}
+
+async function fetchAll(collection, orderField) {
+  const out = [];
+  let last = null;
+  for (;;) {
+    let q = db.collection(collection).orderBy(orderField).limit(1000);
+    if (last !== null) q = db.collection(collection).where(orderField, ">", last).orderBy(orderField).limit(1000);
+    const snap = await withTimeout(q.get(), 10000);
+    snap.docs.forEach((d) => out.push(d.data()));
+    if (snap.size < 1000) break;
+    last = snap.docs[snap.docs.length - 1].data()[orderField];
+  }
+  return out;
+}
+
+// Rebuild the state from the shared pick log. Picks only in this browser (written while the
+// database was unreachable) are uploaded afterwards so both copies agree.
+async function syncFromDatabase() {
+  if (!db) return;
+  try {
+    const picks = await fetchAll(`${NS}picks`, "n");
+    const sessions = await fetchAll(`${NS}sessions`, "startedAt").catch(() => []);
+    const remote = picks.length ? replay(SEED, picks) : freshState();
+    remote.sessions = sessions;
+    remote.created = state.created;
+    if (state.picks.length > remote.picks.length && state.picks.slice(0, remote.picks.length).every((p, i) => p.chosen === remote.picks[i].chosen && p.left === remote.picks[i].left)) {
+      for (const p of state.picks.slice(remote.picks.length)) queueWrite(`${NS}picks/p${String(p.n).padStart(6, "0")}`, p);
+    } else {
+      state = remote;
+    }
+    storeMode = "database";
+    storeNote = "";
+    saveLocal();
+  } catch (e) {
+    storeMode = "browser";
+    storeNote = "The study database could not be reached, so picks are being kept in this browser for now.";
+  }
+}
+
+function queueWrite(path, data) {
+  if (!db) return;
+  writeChain = writeChain.then(async () => {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try { await db.doc(path).set({ ...data }); return; } catch (e) {
+        if (e && e.code === "unavailable" && attempt === 0) { await new Promise((r) => setTimeout(r, 400 + Math.random() * 600)); continue; }
+        storeMode = "browser";
+        storeNote = e && e.code === "quota_exceeded" ? "The study database is full. Download the data now." : "A pick could not be saved to the study database. It is kept in this browser.";
+        return;
+      }
+    }
+  });
+}
+
+// One running session per lineage across devices: a short cooperative lease.
+async function leaseLineage(lineage, holder) {
+  if (!db) return true;
+  try {
+    const r = await withTimeout(db.doc(`${NS}locks/${lineage}`).acquire({ holder, ttlMs: 120000 }), 8000);
+    return !!r.acquired;
+  } catch (e) { return true; }
+}
+
+(async () => {
+  try {
+    if (window.claude && typeof window.claude.use === "function") {
+      db = await window.claude.use("db");
+      downloads = await window.claude.use("downloads");
+    }
+  } catch (e) { db = null; }
+  if (db) {
+    await syncFromDatabase();
+    refreshCurrentView();
+  }
+})();
+
+function refreshCurrentView() {
+  if (!session && app.dataset.view === "research") showResearch();
+}
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function chooseLineage() {
+  const forced = new URLSearchParams(location.search).get("lineage");
+  if (forced && LINEAGES[forced]) return forced;
+  const counts = Object.keys(LINEAGES).map((id) => [id, state.picks.filter((p) => p.lineage === id).length]);
+  counts.sort((a, b) => a[1] - b[1]);
+  return counts[0][0];
+}
+
+// ----------------------------------------------------------------- consent
+function showConsent() {
+  session = null;
+  app.dataset.view = "consent";
+  app.innerHTML = `
+  <section class="panel consent">
+    <div>
+      <p class="lede">Help us find out which machine creatures people like and trust.</p>
+      <p class="muted">This is part of a Minerva University capstone study by Mahean (Computational Sciences), advised by Prof. Volkan.</p>
+    </div>
+    <ul>
+      <li>You will see two small machine creatures at a time and pick the one that fits a single question. There are 40 rounds, which take about ten minutes.</li>
+      <li>Your picks breed the next generation of creatures, so later players see what earlier players chose.</li>
+      <li>We record your picks, how long each pick took, the time of each pick and a participant code. The study stores no name, email or other detail about you.</li>
+      <li>Taking part is voluntary. You can stop at any time by closing the page, and you can ask for your picks to be deleted by giving the researcher your code.</li>
+      <li>The coded pick data, without any link from codes to people, may be published as an open dataset.</li>
+      <li>Contact details for the researcher and for the ethics committee, and the approval reference, will appear here once the study is approved.</li>
+    </ul>
+    <label class="field">Participant code (from the researcher)
+      <input id="pcode" autocomplete="off" maxlength="12" placeholder="For example P01" value="${esc(sessionStorage.getItem("mochi-pcode") || "")}">
+    </label>
+    <label class="check"><input type="checkbox" id="agree"> <span>I am 18 or older, I have read the points above, and I agree to take part.</span></label>
+    <div class="row"><button class="btn primary" id="start" disabled>Start</button></div>
+  </section>`;
+  const agree = document.getElementById("agree");
+  const code = document.getElementById("pcode");
+  const start = document.getElementById("start");
+  const update = () => (start.disabled = !(agree.checked && /^[A-Za-z0-9-]{2,12}$/.test(code.value.trim())));
+  agree.addEventListener("change", update);
+  code.addEventListener("input", update);
+  update();
+  start.addEventListener("click", () => {
+    const pcode = code.value.trim().toUpperCase();
+    try { sessionStorage.setItem("mochi-pcode", pcode); } catch (e) {}
+    beginSession(pcode);
+  });
+}
+
+// ----------------------------------------------------------------- session
+async function beginSession(pcode) {
+  const start = document.getElementById("start");
+  if (start) { start.disabled = true; start.textContent = "Getting ready"; }
+  await syncFromDatabase();
+  const id = `s${Date.now().toString(36)}`;
+  const preferred = chooseLineage();
+  const order = [preferred, ...Object.keys(LINEAGES).filter((l) => l !== preferred)];
+  const forced = new URLSearchParams(location.search).get("lineage");
+  let lineage = null;
+  for (const l of forced && LINEAGES[forced] ? [forced] : order) {
+    if (await leaseLineage(l, id)) { lineage = l; break; }
+  }
+  if (!lineage) {
+    showMessage("Another session is running on a different device.", "Please wait a minute and try again, so two people do not breed the same generation at once.", "Try again", showConsent);
+    return;
+  }
+  session = { id, participant: pcode, lineage, round: 0, startedGen: state.lineages[lineage].gen, shownAt: 0, locked: false };
+  const rec = { id, participant: pcode, lineage, startedAt: new Date().toISOString(), simulated: false };
+  state.sessions.push(rec);
+  saveLocal();
+  queueWrite(`${NS}sessions/${id}`, rec);
+  showRound();
+}
+
+function showMessage(title, body, label, next) {
+  app.dataset.view = "message";
+  app.innerHTML = `<section class="panel done"><h2 style="font-size:30px">${esc(title)}</h2><p class="muted" style="max-width:560px">${esc(body)}</p><button class="btn primary" id="msgBtn">${esc(label)}</button></section>`;
+  document.getElementById("msgBtn").addEventListener("click", next);
+}
+
+function showRound() {
+  const L = state.lineages[session.lineage];
+  if (session.round >= state.config.roundsPerSession) return showDone();
+  const pair = nextPair(state, session.lineage);
+  session.pair = pair;
+  const r = session.round + 1;
+  const pct = (session.round / state.config.roundsPerSession) * 100;
+  app.dataset.view = "round";
+  app.innerHTML = `
+  <section class="panel">
+    <div class="pills">
+      <span class="pill round">Round ${r} of ${state.config.roundsPerSession}</span>
+      <span class="pill gen">Generation ${L.gen + 1}</span>
+    </div>
+    <h1 class="question">${esc(LINEAGES[session.lineage].question)}</h1>
+    <div class="duel">
+      <button class="choice" id="cA" aria-label="Choose creature A">${renderSVG(state.creatures[pair.left].genes, { size: 260 })}<span class="tag">Choose A</span></button>
+      <span class="or">or</span>
+      <button class="choice" id="cB" aria-label="Choose creature B">${renderSVG(state.creatures[pair.right].genes, { size: 260 })}<span class="tag">Choose B</span></button>
+    </div>
+    <div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>
+    <p class="hint">Go with your first impression. You can also press the left or right arrow key.</p>
+  </section>`;
+  session.shownAt = performance.now();
+  session.locked = false;
+  document.getElementById("cA").addEventListener("click", () => choose("left"));
+  document.getElementById("cB").addEventListener("click", () => choose("right"));
+}
+
+function choose(side) {
+  if (!session || session.locked || !session.pair) return;
+  session.locked = true;
+  const { left, right } = session.pair;
+  const chosen = side === "left" ? left : right;
+  const ms = Math.round(performance.now() - session.shownAt);
+  session.round += 1;
+  const { pick } = recordPick(state, {
+    lineage: session.lineage, left, right, chosen, session: session.id,
+    participant: session.participant, round: session.round, ms, at: new Date().toISOString(),
+  });
+  saveLocal();
+  queueWrite(`${NS}picks/p${String(pick.n).padStart(6, "0")}`, pick);
+  if (pick.n % 8 === 0) leaseLineage(session.lineage, session.id);
+  const a = document.getElementById("cA");
+  const b = document.getElementById("cB");
+  (side === "left" ? a : b).classList.add("picked");
+  (side === "left" ? b : a).classList.add("faded");
+  setTimeout(showRound, 260);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!session || !session.pair || session.round >= state.config.roundsPerSession) return;
+  if (e.key === "ArrowLeft") choose("left");
+  if (e.key === "ArrowRight") choose("right");
+});
+
+function showDone() {
+  const L = state.lineages[session.lineage];
+  const best = L.history.length ? L.history[L.history.length - 1].best : null;
+  app.innerHTML = `
+  <section class="panel done">
+    <h2 style="font-size:34px">Thank you.</h2>
+    <p class="muted" style="max-width:560px">Your 40 picks are saved. This lineage is now on generation ${L.gen + 1}. Below is the creature the lineage currently rates highest.</p>
+    ${best ? renderSVG(state.creatures[best].genes, { size: 200, title: "Current top creature" }) : ""}
+    <div class="row" style="justify-content:center">
+      <button class="btn primary" id="again">Next player</button>
+    </div>
+  </section>`;
+  session.pair = null;
+  document.getElementById("again").addEventListener("click", showConsent);
+}
+
+// ----------------------------------------------------------------- researcher view
+function archiveGrid(L) {
+  let html = `<div class="archive" role="img" aria-label="MAP-Elites archive: rows are machine cues, columns are baby schema">`;
+  for (let j = GRID - 1; j >= 0; j--) {
+    html += `<div class="axis">${j === GRID - 1 ? "more" : j === 0 ? "less" : ""}</div>`;
+    for (let i = 0; i < GRID; i++) {
+      const id = L.archive[`${i},${j}`];
+      html += `<div class="cell" title="${id || "empty"}">${id ? renderSVG(state.creatures[id].genes, { size: 80, title: id }) : ""}</div>`;
+    }
+  }
+  html += `<div></div>${Array.from({ length: GRID }, (_, i) => `<div class="axis">${i === 0 ? "less" : i === GRID - 1 ? "more" : ""}</div>`).join("")}</div>
+  <p class="small muted">Columns: baby schema (eye size, low eyes, round head, small body). Rows: machine cues (antenna, face plate, panel ears). Each cell keeps its best creature.</p>`;
+  return html;
+}
+
+function weightBars(lineage) {
+  const rows = picksToRows(state, lineage);
+  if (rows.length < 40) return `<p class="small muted">The first model fit appears after 40 picks in this lineage.</p>`;
+  const m = fitFeatureBT(rows, { lambda: 1 });
+  const order = GENES.map((g, k) => [g, m.weights[k]]).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 8);
+  const max = Math.max(...order.map((o) => Math.abs(o[1])), 0.01);
+  return `<div class="weights">${order.map(([g, w]) => {
+    const pct = (Math.abs(w) / max) * 50;
+    const style = w >= 0 ? `left:50%;width:${pct}%;background:var(--accent)` : `right:50%;width:${pct}%;background:var(--sage)`;
+    return `<div class="wrow"><span>${g.label}</span><span class="wtrack"><i style="${style}"></i></span><span class="small">${w >= 0 ? "+" : ""}${w.toFixed(2)}</span></div>`;
+  }).join("")}</div>
+  <p class="small muted">Bradley-Terry weights from ${rows.length} picks, largest first. Positive means the feature raises the chance of being picked. Side bias: ${m.bias >= 0 ? "+" : ""}${m.bias.toFixed(2)}.</p>`;
+}
+
+function showResearch() {
+  session = null;
+  app.dataset.view = "research";
+  const people = new Set(state.picks.map((p) => p.participant)).size;
+  app.innerHTML = `
+  <section class="panel" style="display:grid;gap:22px">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="font-size:32px">Researcher view</h2>
+      <button class="btn ghost" id="back">Back to the game</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="small muted">Picks</span><b>${state.picks.length}</b></div>
+      <div class="stat"><span class="small muted">Sessions</span><b>${state.sessions.length}</b></div>
+      <div class="stat"><span class="small muted">Participant codes</span><b>${people}</b></div>
+      <div class="stat"><span class="small muted">Creatures</span><b>${Object.keys(state.creatures).length}</b></div>
+    </div>
+    <p class="note">${storeMode === "database" ? "Saving every pick to the shared study database." : "Saving picks in this browser only. Download the data after each session."}${storeNote ? " " + esc(storeNote) : ""}</p>
+    <div class="grid2">
+      ${Object.values(state.lineages).map((L) => `
+      <div class="panel" style="padding:20px;display:grid;gap:14px">
+        <h3 style="font-size:24px">${LINEAGES[L.id].short}: <span class="muted" style="font-size:18px">${esc(LINEAGES[L.id].question)}</span></h3>
+        <p class="small muted" style="margin:0">Generation ${L.gen + 1} · ${picksThisGeneration(state, L.id)} of ${state.config.picksPerGeneration} picks this generation · ${Object.keys(L.archive).length} of ${GRID * GRID} archive cells filled</p>
+        ${archiveGrid(L)}
+        <h3 style="font-size:20px">First model fit</h3>
+        ${weightBars(L.id)}
+      </div>`).join("")}
+    </div>
+    <div style="display:grid;gap:12px">
+      <h3 style="font-size:22px">Data</h3>
+      <div class="row">
+        <button class="btn primary" data-dl="picks">Download picks (CSV)</button>
+        <button class="btn ghost" data-dl="creatures">Creatures (CSV)</button>
+        <button class="btn ghost" data-dl="state">Full state (JSON)</button>
+      </div>
+      <textarea id="out" readonly aria-label="Export text" placeholder="Each export also appears here, so it can be copied if the download is declined."></textarea>
+      <div class="row"><button class="btn ghost" id="copy">Copy text</button><span class="small muted" id="copyMsg" role="status"></span></div>
+      <div class="row">
+        <label class="btn ghost" style="display:inline-block">Import state (JSON)<input type="file" id="imp" accept="application/json" hidden></label>
+        <button class="btn ghost" id="reset">Reset study</button>
+      </div>
+      <p class="small" id="resMsg" role="status"></p>
+      <p class="small muted">Data lives in this browser and, when available, is mirrored to the shared study database. The full study can be rebuilt from the pick log alone, since every generation is a deterministic function of the seed (${state.seed}) and the picks.</p>
+    </div>
+  </section>`;
+  document.getElementById("back").addEventListener("click", showConsent);
+  app.querySelectorAll("[data-dl]").forEach((b) => b.addEventListener("click", () => exportData(b.dataset.dl)));
+  document.getElementById("imp").addEventListener("change", importState);
+  const resetBtn = document.getElementById("reset");
+  resetBtn.addEventListener("click", async () => {
+    if (resetBtn.dataset.armed !== "1") {
+      resetBtn.dataset.armed = "1";
+      resetBtn.textContent = "Press again to delete all picks";
+      document.getElementById("resMsg").textContent = "This deletes every pick in this browser and in the study database. Download the data first.";
+      return;
+    }
+    resetBtn.disabled = true;
+    await resetStudy();
+    showResearch();
+  });
+  document.getElementById("copy").addEventListener("click", async () => {
+    const msg = document.getElementById("copyMsg");
+    const text = document.getElementById("out").value;
+    if (!text) { msg.textContent = "Choose an export first."; return; }
+    try { await navigator.clipboard.writeText(text); msg.textContent = "Copied."; } catch (e) {
+      document.getElementById("out").select();
+      msg.textContent = "Select-all is on. Press Ctrl+C or Cmd+C to copy.";
+    }
+  });
+}
+
+async function exportData(kind) {
+  const stamp = new Date().toISOString().slice(0, 10);
+  const files = {
+    picks: [`mochi-picks-${stamp}.csv`, () => picksCSV(state), "text/csv"],
+    creatures: [`mochi-creatures-${stamp}.csv`, () => creaturesCSV(state), "text/csv"],
+    state: [`mochi-state-${stamp}.json`, () => JSON.stringify(state), "application/json"],
+  };
+  const [name, make, type] = files[kind];
+  const text = make();
+  document.getElementById("out").value = text;
+  if (downloads) {
+    try { await downloads.save({ filename: name, data: text }); return; } catch (e) { return; /* declined: the text area still holds the export */ }
+  }
+  if (window.self === window.top) {
+    // Running as a plain file or on GitHub Pages: an ordinary download works.
+    const url = URL.createObjectURL(new Blob([text], { type }));
+    const a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+}
+
+async function resetStudy() {
+  if (db) {
+    for (const kind of ["picks", "sessions"]) {
+      const coll = `${NS}${kind}`;
+      try {
+        const docs = await fetchAll(coll, kind === "picks" ? "n" : "startedAt");
+        for (const d of docs) {
+          const id = kind === "picks" ? `p${String(d.n).padStart(6, "0")}` : d.id;
+          if (id) await db.doc(`${coll}/${id}`).delete();
+        }
+      } catch (e) { storeNote = "Some database records could not be deleted."; }
+    }
+  }
+  state = freshState();
+  saveLocal();
+}
+
+function importState(e) {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  f.text().then((t) => {
+    try {
+      const s = JSON.parse(t);
+      const rebuilt = replay(s.seed, s.picks);
+      if (stateFingerprint(rebuilt) !== stateFingerprint(s)) throw new Error("The file does not replay to the same state.");
+      rebuilt.sessions = s.sessions || [];
+      rebuilt.created = s.created || null;
+      state = rebuilt;
+      saveLocal();
+      for (const p of state.picks) queueWrite(`${NS}picks/p${String(p.n).padStart(6, "0")}`, p);
+      for (const se of state.sessions) if (se.id) queueWrite(`${NS}sessions/${se.id}`, { ...se, startedAt: se.startedAt || "" });
+      showResearch();
+    } catch (err) { const m = document.getElementById("resMsg"); if (m) m.textContent = "Could not import: " + err.message; }
+  });
+}
+
+if (!STUDY_OPEN) document.getElementById("preview").hidden = false;
+document.getElementById("toResearch").addEventListener("click", showResearch);
+if (new URLSearchParams(location.search).has("research")) showResearch(); else showConsent();
+</script>
+</body>
+</html>
